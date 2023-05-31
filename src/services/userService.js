@@ -2,18 +2,18 @@ import axios from "axios";
 
 export default {
     findAll() {
-        return axios.get("http://localhost:3001/user/all");
+        return axios.get(process.env.VUE_APP_BASE_URL + "/user/all");
     },
     findById(id) {
-        return axios.get(`http://localhost:3001/user/${id}`);
+        return axios.get(process.env.VUE_APP_BASE_URL + `/user/${id}`);
     },
     create(user) {
-        return axios.post("http://localhost:3001/user/create", user);
+        return axios.post(process.env.VUE_APP_BASE_URL + "/user/create", user);
     },
     update(id, user) {
-        return axios.put(`http://localhost:3001/user/${id}`, user);
+        return axios.put(process.env.VUE_APP_BASE_URL + `/user/${id}`, user);
     },
     delete(id) {
-        return axios.delete(`http://localhost:3001/user/${id}`);
+        return axios.delete(process.env.VUE_APP_BASE_URL + `/user/${id}`);
     }
 }

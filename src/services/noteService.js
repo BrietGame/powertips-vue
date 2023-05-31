@@ -2,18 +2,18 @@ import axios from "axios";
 
 export default {
     findAll() {
-        return axios.get("http://localhost:3001/note/all");
+        return axios.get(process.env.VUE_APP_BASE_URL + "/note/all");
     },
     findById(id) {
-        return axios.get(`http://localhost:3001/note/${id}`);
+        return axios.get(process.env.VUE_APP_BASE_URL + `/note/${id}`);
     },
     create(note) {
-        return axios.post("http://localhost:3001/note/create", note);
+        return axios.post(process.env.VUE_APP_BASE_URL + `/note/create`, note);
     },
     update(id, note) {
-        return axios.put(`http://localhost:3001/note/${id}`, note);
+        return axios.put(process.env.VUE_APP_BASE_URL + `/note/${id}`, note);
     },
     delete(id) {
-        return axios.delete(`http://localhost:3001/note/${id}`);
+        return axios.delete(process.env.VUE_APP_BASE_URL + `/note/${id}`);
     }
 }
