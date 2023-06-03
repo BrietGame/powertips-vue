@@ -6,9 +6,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test:unit": "vitest"
+    "test:unit": "vitest",
+    "build:css": "tailwindcss build ./src/tailwind.css -o ./public/build/tailwind.css"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^2.9.1",
     "axios": "^1.4.0",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0",
@@ -17,7 +19,10 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/test-utils": "^2.3.2",
+    "autoprefixer": "^10.4.14",
     "jsdom": "^22.0.0",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2",
     "vite": "^4.3.5",
     "vitest": "^0.31.0"
   }
