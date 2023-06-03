@@ -2,12 +2,12 @@ import axios from 'axios';
 
 export default {
     login(user) {
-        return axios.post(process.env.VUE_APP_BASE_URL + '/auth/login', user);
+        return axios.post(import.meta.env.VITE_BASE_URL + '/auth/login', user);
     },
     register(user) {
-        return axios.post(process.env.VUE_APP_BASE_URL + '/register', user);
+        return axios.post(import.meta.env.VITE_BASE_URL + '/auth/register', user);
     },
     logout() {
-        return axios.get(process.env.VUE_APP_BASE_URL + '/logout');
+        return axios.get(import.meta.env.VITE_BASE_URL + '/logout');
     }
 }
