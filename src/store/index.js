@@ -9,6 +9,7 @@ import noteService from "@/services/noteService";
 export const store = createStore({
     state: {
         users: [],
+        user: null,
         categories: [],
         comments: [],
         guides: [],
@@ -16,6 +17,7 @@ export const store = createStore({
     },
     getters: {
         getUsers: state => state.users,
+        getUser: state => state.user,
         getCategories: state => state.categories,
         getComments: state => state.comments,
         getGuides: state => state.guides,
@@ -30,6 +32,9 @@ export const store = createStore({
             console.info(users.data)
             state.users = users.data;
             console.info(state.users)
+        },
+        USER(state, user) {
+            state.user = user;
         },
         CATEGORIES(state, categories) {
             state.categories = categories.data;
