@@ -1,14 +1,5 @@
 <template>
   <div>
-    <form v-if="dataSelected != null">
-      <div v-for="(field, i) in dataSelected" class="mb-6">
-        <div v-if="field.isEditable">
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
-          <input v-model="field.value" :value="field.value" :type="field.type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-        </div>
-      </div>
-      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-    </form>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div class="pb-4 bg-white dark:bg-gray-900">
         <label for="table-search" class="sr-only">Rechercher</label>
@@ -42,11 +33,11 @@
             </div>
           </td>
           <td v-for="(v, key) in value" class="px-6 py-4">
-            {{ value[key] }}
+            {{ v }}
           </td>
           <td v-if="data.actions != null" class="px-6 py-4">
             <div v-for="action in data.actions">
-              <a @click="selectData(value)" href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-1">{{ action.label }}</a>
+              <a :href="action.action + data.values[0].id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-1">{{ action.label }}</a>
             </div>
           </td>
         </tr>
@@ -66,25 +57,14 @@ onMounted(() => {
 </script>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "Table",
   props: {
     data: {
       type: Object,
       required: true
-    }
-  },
-  data() {
-    return {
-      dataSelected: null
-    }
-  },
-  methods: {
-    selectData(data) {
-      this.$store.commit('USER', data);
-      console.log(this.$store.state.user)
-      this.dataSelected = this.data.models;
-      console.log(this.dataSelected)
     }
   }
 }

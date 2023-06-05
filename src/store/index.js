@@ -11,42 +11,59 @@ export const store = createStore({
         users: [],
         user: null,
         categories: [],
+        category: null,
         comments: [],
+        comment: null,
         guides: [],
-        notes: []
+        guide: null,
+        notes: [],
+        note: null,
     },
     getters: {
         getUsers: state => state.users,
         getUser: state => state.user,
         getCategories: state => state.categories,
+        getCategory: state => state.category,
         getComments: state => state.comments,
+        getComment: state => state.comment,
         getGuides: state => state.guides,
-        getNotes: state => state.notes
+        getGuide: state => state.guide,
+        getNotes: state => state.notes,
+        getNote: state => state.note
     },
     mutations: {
         CONNECTED(state, token) {
             state.token = token;
         },
         USERS(state, users) {
-            console.info("users: ")
-            console.info(users.data)
             state.users = users.data;
-            console.info(state.users)
         },
         USER(state, user) {
-            state.user = user;
+            state.user = user.data;
         },
         CATEGORIES(state, categories) {
             state.categories = categories.data;
         },
+        CATEGORY(state, category) {
+            state.category = category.data;
+        },
         COMMENTS(state, comments) {
             state.comments = comments.data;
+        },
+        COMMENT(state, comment) {
+            state.comment = comment.data;
         },
         GUIDES(state, guides) {
             state.guides = guides.data;
         },
+        GUIDE(state, guide) {
+            state.guide = guide.data;
+        },
         NOTES(state, notes) {
             state.notes = notes.data;
+        },
+        NOTE(state, note) {
+            state.note = note.data;
         }
     },
     actions: {
@@ -90,36 +107,41 @@ export const store = createStore({
                 });
             });
         },
-        findUserById(id) {
+        findUserById({commit}, id) {
             return new Promise((resolve, reject) => {
                 userService.findById(id).then((response) => {
-                    resolve(response);
+                    commit('USER', response.data);
+                    resolve(response.data);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        createUser(user) {
+        createUser({commit}, user) {
             return new Promise((resolve, reject) => {
                 userService.create(user).then((response) => {
+                    commit('USER', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        updateUser(id, user) {
+        updateUser({commit}, user) {
+            console.log(user)
             return new Promise((resolve, reject) => {
-                userService.update(id, user).then((response) => {
+                userService.update(user.id, user).then((response) => {
+                    commit('USER', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        deleteUser(id) {
+        deleteUser({commit}, id) {
             return new Promise((resolve, reject) => {
                 userService.delete(id).then((response) => {
+                    commit('USER', null);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -136,36 +158,40 @@ export const store = createStore({
                 });
             });
         },
-        findCategoryById(id) {
+        findCategoryById({commit}, id) {
             return new Promise((resolve, reject) => {
                 categoryService.findById(id).then((response) => {
+                    commit('CATEGORY', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        createCategory(category) {
+        createCategory({commit}, category) {
             return new Promise((resolve, reject) => {
                 categoryService.create(category).then((response) => {
+                    commit('CATEGORIE', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        updateCategory(id, category) {
+        updateCategory({commit}, category) {
             return new Promise((resolve, reject) => {
-                categoryService.update(id, category).then((response) => {
+                categoryService.update(category.id, category).then((response) => {
+                    commit('CATEGORIE', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        deleteCategory(id) {
+        deleteCategory({commit}, id) {
             return new Promise((resolve, reject) => {
                 categoryService.delete(id).then((response) => {
+                    commit('CATEGORIE', null);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -182,36 +208,40 @@ export const store = createStore({
                 });
             });
         },
-        findCommentById(id) {
+        findCommentById({commit}, id) {
             return new Promise((resolve, reject) => {
                 commentService.findById(id).then((response) => {
+                    commit('COMMENT', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        createComment(comment) {
+        createComment({commit}, comment) {
             return new Promise((resolve, reject) => {
                 commentService.create(comment).then((response) => {
+                    commit('COMMENT', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        updateComment(id, comment) {
+        updateComment({commit}, comment) {
             return new Promise((resolve, reject) => {
-                commentService.update(id, comment).then((response) => {
+                commentService.update(comment.id, comment).then((response) => {
+                    commit('COMMENT', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        deleteComment(id) {
+        deleteComment({commit}, id) {
             return new Promise((resolve, reject) => {
                 commentService.delete(id).then((response) => {
+                    commit('COMMENT', null);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -228,36 +258,40 @@ export const store = createStore({
                 });
             });
         },
-        findGuideById(id) {
+        findGuideById({commit}, id) {
             return new Promise((resolve, reject) => {
                 guideService.findById(id).then((response) => {
+                    commit('GUIDE', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        createGuide(guide) {
+        createGuide({commit}, guide) {
             return new Promise((resolve, reject) => {
                 guideService.create(guide).then((response) => {
+                    commit('GUIDE', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        updateGuide(id, guide) {
+        updateGuide({commit}, guide) {
             return new Promise((resolve, reject) => {
-                guideService.update(id, guide).then((response) => {
+                guideService.update(guide.id, guide).then((response) => {
+                    commit('GUIDE', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        deleteGuide(id) {
+        deleteGuide({commit}, id) {
             return new Promise((resolve, reject) => {
                 guideService.delete(id).then((response) => {
+                    commit('GUIDE', null);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -274,36 +308,40 @@ export const store = createStore({
                 });
             });
         },
-        findNoteById(id) {
+        findNoteById({commit}, id) {
             return new Promise((resolve, reject) => {
                 noteService.findById(id).then((response) => {
+                    commit('NOTE', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        createNote(note) {
+        createNote({commit}, note) {
             return new Promise((resolve, reject) => {
                 noteService.create(note).then((response) => {
+                    commit('NOTE', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        updateNote(id, note) {
+        updateNote({commit}, note) {
             return new Promise((resolve, reject) => {
-                noteService.update(id, note).then((response) => {
+                noteService.update(note.id, note).then((response) => {
+                    commit('NOTE', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
                 });
             });
         },
-        deleteNote(id) {
+        deleteNote({commit}, id) {
             return new Promise((resolve, reject) => {
                 noteService.delete(id).then((response) => {
+                    commit('NOTE', null);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);

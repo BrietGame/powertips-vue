@@ -2,128 +2,55 @@
   <div class="container">
     <h1>Admin</h1>
 
-    <Table v-if="users != null" :data="users" />
-    <Table v-if="guides != null" :data="guides"/>
-    <Table v-if="categories != null" :data="categories"/>
-    <Table v-if="notes != null" :data="notes"/>
-    <Table v-if="comments != null" :data="comments"/>
+    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+      <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+        <li class="mr-2" role="presentation">
+          <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#users" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Utilisateurs</button>
+        </li>
+        <li class="mr-2" role="presentation">
+          <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#guides" type="button" role="tab" aria-controls="settings" aria-selected="false">Guides</button>
+        </li>
+        <li class="mr-2" role="presentation">
+          <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#categories" type="button" role="tab" aria-controls="settings" aria-selected="false">Catégories</button>
+        </li>
+        <li class="mr-2" role="presentation">
+          <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#comments" type="button" role="tab" aria-controls="settings" aria-selected="false">Commentaires</button>
+        </li>
+        <li class="mr-2" role="presentation">
+          <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#notes" type="button" role="tab" aria-controls="settings" aria-selected="false">Notes</button>
+        </li>
+      </ul>
+    </div>
+    <div id="myTabContent">
+      <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="users" role="tabpanel" aria-labelledby="profile-tab">
+        <Users />
+      </div>
+      <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="guides" role="tabpanel" aria-labelledby="dashboard-tab">
+        <Guides />
+      </div>
+      <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="categories" role="tabpanel" aria-labelledby="settings-tab">
+        <Categories />
+      </div>
+      <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="comments" role="tabpanel" aria-labelledby="contacts-tab">
+        <Comments />
+      </div>
+      <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="notes" role="tabpanel" aria-labelledby="contacts-tab">
+        <Notes />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Table from "@/components/Table.vue";
+import Users from "@/views/admin/categories/Categories.vue";
+import Guides from "@/views/admin/guides/Guides.vue";
+import Categories from "@/views/admin/categories/Categories.vue";
+import Comments from "@/views/admin/comments/Comments.vue";
+import Notes from "@/views/admin/notes/Notes.vue";
 
 export default {
   name: 'Admin',
-  components: {Table},
-  data() {
-    return {
-      users: null,
-      guides: null,
-      categories: null,
-      notes: null,
-      comments: null
-    }
-  },
-  methods: {
-    setUsers() {
-      console.log(this.$store.state.user !== null)
-      console.info(this.$store.state.users.find(user => user.id === this.$store.state.user.id))
-      this.users = {
-        models: [
-          {
-            label: 'Id',
-            type: 'number',
-            value: this.$store.state.user !== null ? this.$store.state.users.find(user => user.id === this.$store.state.user.id).id : null,
-            isEditable: false
-          },
-          {
-            label: 'Email',
-            type: 'email',
-            value: this.$store.state.user !== null ? this.$store.state.users.find(user => user.id === this.$store.state.user.id).email : null,
-            isEditable: true
-          },
-          {
-            label: 'Username',
-            type: 'text',
-            value: this.$store.state.user !== null ? this.$store.state.users.find(user => user.id === this.$store.state.user.id).username : null,
-            isEditable: true
-          },
-          {
-            label: 'Roles',
-            type: 'text',
-            value: this.$store.state.user !== null ? this.$store.state.users.find(user => user.id === this.$store.state.user.id).roles : null,
-            isEditable: false
-          }
-        ],
-        labels: ['Id', 'Email', 'Username', 'Roles', 'Action'],
-        values: this.$store.state.users,
-        actions: {
-          edit: {
-            label: 'Edit',
-            action: (user) => {
-              console.log(user)
-            }
-          },
-          delete: {
-            label: 'Delete',
-            action: (user) => {
-              console.log(user)
-            }
-          }
-        },
-        onSubmit: (user) => {
-          console.log(user)
-        }
-      }
-    },
-    setGuides() {
-      this.guides = {
-        labels: ['Id', 'Title', 'Excerpt', 'Content', 'Media', 'Stats', 'Status', 'Category', 'Crée', 'Modifié', 'Action'],
-        values: this.$store.state.guides
-      }
-    },
-    setCategories() {
-      this.categories = {
-        labels: ['Id', 'Name', 'Description', 'Parent_id', 'Action'],
-        values: this.$store.state.categories
-      }
-    },
-    setNotes() {
-      this.notes = {
-        labels: ['Id', 'Score', 'User', 'Guide', 'Action'],
-        values: this.$store.state.notes
-      }
-    },
-    setComments() {
-      this.comments = {
-        labels: ['Id', 'Content', 'User', 'Guide', 'Crée', 'Action'],
-        values: this.$store.state.comments
-      }
-    }
-  },
-  mounted() {
-    this.$store.dispatch('findAllUsers');
-    this.$store.dispatch('findAllGuides');
-    this.$store.dispatch('findAllCategories');
-    this.$store.dispatch('findAllNotes');
-    this.$store.dispatch('findAllComments');
-    setTimeout(() => {
-      this.setUsers();
-      this.setGuides();
-      this.setCategories();
-      this.setNotes();
-      this.setComments();
-    }, 300)
-  },
-  beforeUpdate() {
-    console.log('beforeUpdate')
-    console.log(this.$store.state.user)
-    this.setUsers();
-    this.setGuides();
-    this.setCategories();
-    this.setNotes();
-    this.setComments();
-  }
+  components: {Notes, Comments, Categories, Guides, Users, Table}
 }
 </script>

@@ -1,19 +1,19 @@
 <template>
-
-
-  <Table v-if="users != null" :data="users" />
+  <div class="container">
+    <h1>Users</h1>
+    <Table v-if="users != null" :data="users" />
+  </div>
 </template>
 
 <script>
 import Table from "@/components/Table.vue";
 
 export default {
-  name: 'AdminUsers',
+  name: 'Users',
   components: {Table},
   data() {
     return {
-      users: null,
-      userSelected: null
+      users: null
     }
   },
   methods: {
@@ -23,48 +23,42 @@ export default {
           {
             label: 'Id',
             type: 'number',
-            value: null,
+            value: this.$store.state.user !== null ? this.$store.state.users.find(user => user.id === this.$store.state.user.id).id : null,
             isEditable: false
           },
           {
             label: 'Email',
             type: 'email',
-            value: 'email',
+            value: this.$store.state.user !== null ? this.$store.state.users.find(user => user.id === this.$store.state.user.id).email : null,
             isEditable: true
           },
           {
             label: 'Username',
             type: 'text',
-            value: 'username',
+            value: this.$store.state.user !== null ? this.$store.state.users.find(user => user.id === this.$store.state.user.id).username : null,
             isEditable: true
           },
           {
             label: 'Roles',
             type: 'text',
-            value: 'roles',
+            value: this.$store.state.user !== null ? this.$store.state.users.find(user => user.id === this.$store.state.user.id).roles : null,
             isEditable: false
           }
         ],
+        labels: ['Id', 'Email', 'Username', 'Roles', 'Action'],
         values: this.$store.state.users,
         actions: {
           edit: {
             label: 'Edit',
-            action: (user) => {
-              console.log(user)
-            }
+            action: '/admin/users/edit/'
           },
           delete: {
             label: 'Delete',
-            action: (user) => {
-              console.log(user)
-            }
+            action: '/admin/users/delete/'
           }
-        },
-        onSubmit: (user) => {
-          console.log(user)
         }
       }
-    },
+    }
   },
   mounted() {
     this.$store.dispatch('findAllUsers');
