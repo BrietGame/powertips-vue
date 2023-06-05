@@ -4,10 +4,10 @@ import userService from "@/services/userService";
 import categoryService from "@/services/categoryService";
 import commentService from "@/services/commentService";
 import guideService from "@/services/guideService";
+import noteService from "@/services/noteService";
 
 export const store = createStore({
     state: {
-        token: "",
         users: [],
         categories: [],
         comments: [],
@@ -15,31 +15,33 @@ export const store = createStore({
         notes: []
     },
     getters: {
-        token: state => state.token,
-        users: state => state.users,
-        categories: state => state.categories,
-        comments: state => state.comments,
-        guides: state => state.guides,
-        notes: state => state.notes
+        getUsers: state => state.users,
+        getCategories: state => state.categories,
+        getComments: state => state.comments,
+        getGuides: state => state.guides,
+        getNotes: state => state.notes
     },
     mutations: {
         CONNECTED(state, token) {
             state.token = token;
         },
         USERS(state, users) {
-            state.users = users;
+            console.info("users: ")
+            console.info(users.data)
+            state.users = users.data;
+            console.info(state.users)
         },
         CATEGORIES(state, categories) {
-            state.categories = categories;
+            state.categories = categories.data;
         },
         COMMENTS(state, comments) {
-            state.comments = comments;
+            state.comments = comments.data;
         },
         GUIDES(state, guides) {
-            state.guides = guides;
+            state.guides = guides.data;
         },
         NOTES(state, notes) {
-            state.notes = notes;
+            state.notes = notes.data;
         }
     },
     actions: {
@@ -73,9 +75,10 @@ export const store = createStore({
                 });
             });
         },
-        findAllUsers() {
+        findAllUsers({commit}) {
             return new Promise((resolve, reject) => {
                 userService.findAll().then((response) => {
+                    commit('USERS', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -118,9 +121,10 @@ export const store = createStore({
                 });
             });
         },
-        findAllCategories() {
+        findAllCategories({commit}) {
             return new Promise((resolve, reject) => {
                 categoryService.findAll().then((response) => {
+                    commit('CATEGORIES', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -163,9 +167,10 @@ export const store = createStore({
                 });
             });
         },
-        findAllComments() {
+        findAllComments({commit}) {
             return new Promise((resolve, reject) => {
                 commentService.findAll().then((response) => {
+                    commit('COMMENTS', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -208,9 +213,10 @@ export const store = createStore({
                 });
             });
         },
-        findAllGuides() {
+        findAllGuides({commit}) {
             return new Promise((resolve, reject) => {
                 guideService.findAll().then((response) => {
+                    commit('GUIDES', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -253,9 +259,10 @@ export const store = createStore({
                 });
             });
         },
-        findAllNotes() {
+        findAllNotes({commit}) {
             return new Promise((resolve, reject) => {
                 noteService.findAll().then((response) => {
+                    commit('NOTES', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
