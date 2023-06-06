@@ -18,6 +18,7 @@ export const store = createStore({
         guide: null,
         notes: [],
         note: null,
+        moyNote: null
     },
     getters: {
         getUsers: state => state.users,
@@ -29,7 +30,8 @@ export const store = createStore({
         getGuides: state => state.guides,
         getGuide: state => state.guide,
         getNotes: state => state.notes,
-        getNote: state => state.note
+        getNote: state => state.note,
+        getMoyNote: state => state.moyNote
     },
     mutations: {
         CONNECTED(state, token) {
@@ -64,6 +66,9 @@ export const store = createStore({
         },
         NOTE(state, note) {
             state.note = note.data;
+        },
+        MOY_NOTE(state, moyNotes) {
+            state.moyNote = moyNotes.data;
         }
     },
     actions: {
@@ -208,6 +213,16 @@ export const store = createStore({
                 });
             });
         },
+        findAllCommentsByGuidId({commit}, id) {
+            return new Promise((resolve, reject) => {
+                commentService.findAllByGuideId(id).then((response) => {
+                    commit('COMMENTS', response.data);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
         findCommentById({commit}, id) {
             return new Promise((resolve, reject) => {
                 commentService.findById(id).then((response) => {
@@ -312,6 +327,28 @@ export const store = createStore({
             return new Promise((resolve, reject) => {
                 noteService.findById(id).then((response) => {
                     commit('NOTE', response.data);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+        findNotesByGuideId({commit}, id) {
+            return new Promise((resolve, reject) => {
+                noteService.findAllByGuideId(id).then((response) => {
+                    console.log(response);
+                    commit('NOTE', response.data);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+        findNoteMoyenneByGuideId({commit}, id) {
+            return new Promise((resolve, reject) => {
+                noteService.findMoyenneByGuideId(id).then((response) => {
+                    console.log(response);
+                    commit('MOY_NOTE', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);

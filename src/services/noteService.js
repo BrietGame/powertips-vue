@@ -7,6 +7,12 @@ export default {
     findById(id) {
         return axios.get(import.meta.env.VITE_BASE_URL + `/note/${id}`);
     },
+    findAllByGuideId(id) {
+        return axios.get(import.meta.env.VITE_BASE_URL + `/note/guide/${id}`);
+    },
+    findMoyenneByGuideId(id) {
+        return axios.get(import.meta.env.VITE_BASE_URL + `/note/moyenne/${id}`);
+    },
     create(note) {
         return axios.post(import.meta.env.VITE_BASE_URL + `/note/create`, note);
     },

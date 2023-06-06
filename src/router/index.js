@@ -23,6 +23,17 @@ const router = createRouter({
       component: Register
     },
     {
+      path: '/create-guide',
+      name: 'create-guide',
+      component: () => import('../views/CreateGuide.vue')
+    },
+    {
+      path: '/guide/:id',
+      name: 'guide',
+      component: () => import('../views/GuideDetails.vue')
+    },
+      // Admin
+    {
       path: '/admin',
       name: 'admin',
       component: Admin

@@ -4,6 +4,9 @@ export default {
     findAll() {
         return axios.get(import.meta.env.VITE_BASE_URL + "/comment/all");
     },
+    findAllByGuideId(id) {
+        return axios.get(import.meta.env.VITE_BASE_URL + `/comment/guide/${id}`);
+    },
     findById(id) {
         return axios.get(import.meta.env.VITE_BASE_URL + `/comment/${id}`);
     },
