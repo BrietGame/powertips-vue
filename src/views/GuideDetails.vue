@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto max-w-7xl py-10">
+  <div>
     <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{ guide.title }}</h1>
     <div class="metadata">
       <p>Publié le {{ guide.created_at == guide.updated_at ? formatDate(guide.created_at) : formatDate(guide.updated_at) }}</p>
