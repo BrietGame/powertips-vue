@@ -7,7 +7,7 @@
           <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PowerTips</span>
         </RouterLink>
         <div class="flex items-center md:order-2">
-          <div v-if="!getToken">
+          <div v-if="!isConnected">
             <RouterLink to="/login">
               <button type="button" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Se connecter</button>
             </RouterLink>
@@ -16,9 +16,7 @@
             </RouterLink>
           </div>
           <div v-else>
-            <RouterLink to="/logout">
-              <button type="button" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Se déconnecter</button>
-            </RouterLink>
+            <button @click.prevent="logout" type="button" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Se déconnecter</button>
             <RouterLink to="/profile">
               <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Mon profil</button>
             </RouterLink>
@@ -71,19 +69,33 @@
 <script>
 export default {
   name: 'Header',
+  data() {
+    return {
+      token: null
+    }
+  },
   computed: {
     categories() {
       console.log(this.$store.getters.getCategories)
       return this.$store.getters.getCategories;
+    },
+    isConnected() {
+      return this.$store.getters.getIsConnected;
     }
   },
   methods: {
     getToken() {
-      return localStorage.getItem('token');
+      this.token = localStorage.getItem('token');
     },
+    logout() {
+      localStorage.removeItem('token');
+      this.$store.dispatch('logout');
+      this.$router.push('/');
+      this.getToken();
+    }
   },
   mounted() {
-    this.$store.dispatch('findAllCategories');
+    this.getToken();
   }
 }
 </script>

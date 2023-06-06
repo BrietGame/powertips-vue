@@ -18,7 +18,8 @@ export const store = createStore({
         guide: null,
         notes: [],
         note: null,
-        moyNote: null
+        moyNote: null,
+        isConnected: false
     },
     getters: {
         getUsers: state => state.users,
@@ -31,11 +32,12 @@ export const store = createStore({
         getGuide: state => state.guide,
         getNotes: state => state.notes,
         getNote: state => state.note,
-        getMoyNote: state => state.moyNote
+        getMoyNote: state => state.moyNote,
+        getIsConnected: state => state.isConnected
     },
     mutations: {
-        CONNECTED(state, token) {
-            state.token = token;
+        CONNECTED(state, value) {
+            state.isConnected = value;
         },
         USERS(state, users) {
             state.users = users.data;
@@ -75,7 +77,7 @@ export const store = createStore({
         auth({commit}, user) {
             return new Promise((resolve, reject) => {
                 authService.login(user).then((response) => {
-                    commit('CONNECTED', response);
+                    commit('CONNECTED', true);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -85,7 +87,6 @@ export const store = createStore({
         register({commit}, user) {
             return new Promise((resolve, reject) => {
                 authService.register(user).then((response) => {
-                    commit('CONNECTED', response);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -95,7 +96,7 @@ export const store = createStore({
         logout({commit}) {
             return new Promise((resolve, reject) => {
                 authService.logout().then((response) => {
-                    commit('CONNECTED', response);
+                    commit('CONNECTED', false);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -115,6 +116,16 @@ export const store = createStore({
         findUserById({commit}, id) {
             return new Promise((resolve, reject) => {
                 userService.findById(id).then((response) => {
+                    commit('USER', response.data);
+                    resolve(response.data);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+        findUserByEmail({commit}, email) {
+            return new Promise((resolve, reject) => {
+                userService.findByEmail(email).then((response) => {
                     commit('USER', response.data);
                     resolve(response.data);
                 }).catch((error) => {

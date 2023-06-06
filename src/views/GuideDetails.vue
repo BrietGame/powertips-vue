@@ -32,6 +32,22 @@
 
     <section>
       <h2 class="text-2xl font-bold mb-4">Commentaires</h2>
+
+      <form @submit.prevent="onSubmitComment" v-if="this.$store.getters.getUser != null">
+        <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+          <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+            <label for="comment" class="sr-only">Ton commentaire</label>
+            <textarea v-model="newComment" id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Écrit un commentaire..." required></textarea>
+          </div>
+          <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
+            <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+              Publier mon commentaire
+            </button>
+          </div>
+        </div>
+      </form>
+      <p class="ml-auto text-xs text-gray-500 dark:text-gray-400">Remember, contributions to this topic should follow our <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Community Guidelines</a>.</p>
+
       <div class="py-4" v-for="comment in comments">
         <div class="author flex gap-2 items-center">
           <div class="avatar">
@@ -53,6 +69,11 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 export default {
   name: 'GuideDetails',
   components: {FontAwesomeIcon},
+  data() {
+    return {
+      newComment: null
+    }
+  },
   computed: {
     guide() {
       return this.$store.getters.getGuide;
@@ -72,6 +93,18 @@ export default {
     formatDate(date) {
       let dateFormated = new Date(date);
       return dateFormated.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+    },
+    onSubmitComment() {
+      if (this.newComment != null) {
+        this.$store.dispatch('createComment', {
+          content: this.newComment,
+          guide_id: this.guide.id,
+          user_id: this.$store.getters.getUser.id
+        }).then(() => {
+          this.newComment = null;
+          this.$store.dispatch('findAllCommentsByGuidId', this.$route.params.id);
+        });
+      }
     }
   },
   created() {

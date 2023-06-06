@@ -7,6 +7,9 @@ export default {
     findById(id) {
         return axios.get(import.meta.env.VITE_BASE_URL + `/user/${id}`);
     },
+    findByEmail(email) {
+        return axios.get(import.meta.env.VITE_BASE_URL + `/user/email/${email}`);
+    },
     create(user) {
         return axios.post(import.meta.env.VITE_BASE_URL + "/user/create", user);
     },

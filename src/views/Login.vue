@@ -33,7 +33,8 @@ export default {
           (response) => {
             console.log(response.data.token);
             localStorage.setItem('token', response.data.token);
-            this.$router.push('/');
+            // Emettre un évènement pour que le composant Header puisse mettre à jour le state
+            this.$router.push('/profile');
           }
         )
       } else {
