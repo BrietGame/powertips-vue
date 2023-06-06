@@ -4,6 +4,9 @@ export default {
     findAll() {
         return axios.get(import.meta.env.VITE_BASE_URL + "/guide/all");
     },
+    findAllByUserId(userId) {
+        return axios.get(import.meta.env.VITE_BASE_URL + `/guide/all/${userId}`);
+    },
     findById(id) {
         return axios.get(import.meta.env.VITE_BASE_URL + `/guide/${id}`);
     },

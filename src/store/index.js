@@ -273,6 +273,16 @@ export const store = createStore({
                 });
             });
         },
+        findAllGuidesByUserId({commit}, id) {
+            return new Promise((resolve, reject) => {
+                guideService.findAllByUserId(id).then((response) => {
+                    commit('GUIDES', response.data);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
         findGuideById({commit}, id) {
             return new Promise((resolve, reject) => {
                 guideService.findById(id).then((response) => {
