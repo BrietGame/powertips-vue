@@ -53,6 +53,9 @@ export default {
   },
   created() {
     this.$store.dispatch('findAllCategories');
+    if (!this.$store.getters.getIsConnected) {
+      this.$router.push('/login');
+    }
   }
 }
 </script>
