@@ -39,24 +39,6 @@ export default {
             isEditable: true
           },
           {
-            label: 'Content',
-            type: 'text',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).content : null,
-            isEditable: true
-          },
-          {
-            label: 'Media',
-            type: 'text',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).media : null,
-            isEditable: true
-          },
-          {
-            label: 'Stats',
-            type: 'text',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).stats : null,
-            isEditable: true
-          },
-          {
             label: 'Status',
             type: 'text',
             value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).status : null,
@@ -75,20 +57,14 @@ export default {
             isEditable: true
           },
           {
-            label: 'Crée le',
+            label: 'Actualisation',
             type: 'date',
             value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).created_at : null,
             isEditable: true
-          },
-          {
-            label: 'Modifié le',
-            type: 'date',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).updated_at : null,
-            isEditable: true
           }
         ],
-        labels: ['Id', 'Title', 'Excerpt', 'Content', 'Media', 'Stats', 'Status', 'User', 'Category', 'Création', 'Modification', 'Actions'],
-        values: this.$store.state.guides,
+        labels: ['Id', 'Title', 'Excerpt', 'Status', 'User', 'Catégorie(s)', 'Date', 'Actions'],
+        values: this.$store.getters.getGuidesForList,
         actions: {
           view: {
             label: 'View',
@@ -96,7 +72,7 @@ export default {
           },
           edit: {
             label: 'Edit',
-            action: '/my-guides/edit/'
+            action: '/edit-guide/'
           },
           delete: {
             label: 'Delete',

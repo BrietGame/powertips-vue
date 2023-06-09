@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import {utils} from "@/utils";
+
 export default {
   name: 'CreateGuide',
   data() {
@@ -39,22 +41,63 @@ export default {
     categories() {
       console.log(this.$store.getters.getCategories)
       return this.$store.getters.getCategories;
+    },
+    guide() {
+      return this.$store.getters.getGuide || null;
     }
   },
   methods: {
     onSubmit() {
-      this.$store.dispatch('createGuide', {
-        title: this.title,
-        content: this.content,
-        excerpt: this.excerpt,
-        category_id: this.category_id
-      });
+      if (this.$route.params.id) {
+        this.$store.dispatch('updateGuide', {
+          id: this.$route.params.id,
+          title: this.title,
+          content: this.content,
+          excerpt: this.excerpt,
+          category_id: this.category_id,
+          user_id: utils.decodeToken().id
+        }).then(() => {
+          this.$notify({
+            group: 'notify',
+            title: 'Succès',
+            text: 'Votre guide a bien été modifié',
+            type: 'success'
+          });
+          this.$router.push('/my-guides');
+        });
+      } else {
+        this.$store.dispatch('createGuide', {
+          title: this.title,
+          content: this.content,
+          excerpt: this.excerpt,
+          category_id: this.category_id,
+          user_id: utils.decodeToken().id
+        }).then(() => {
+          this.$notify({
+            group: 'notify',
+            title: 'Succès',
+            text: 'Votre guide a bien été créé',
+            type: 'success'
+          });
+          this.$router.push('/my-guides');
+        });
+      }
     }
   },
   created() {
     this.$store.dispatch('findAllCategories');
     if (!this.$store.getters.getIsConnected) {
       this.$router.push('/login');
+    }
+  },
+  mounted() {
+    if (this.$route.params.id) {
+      this.$store.dispatch('findGuideById', this.$route.params.id).then(() => {
+        this.title = this.guide.title;
+        this.content = this.guide.content;
+        this.excerpt = this.guide.excerpt;
+        this.category_id = this.guide.category_id;
+      });
     }
   }
 }

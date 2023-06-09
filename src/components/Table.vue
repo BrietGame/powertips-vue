@@ -33,11 +33,46 @@
             </div>
           </td>
           <td v-for="(v, key) in value" class="px-6 py-4">
-            {{ v }}
+            <div v-if="key === 'status'">
+              <span v-if="v === 'WAITING'" class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"><font-awesome-icon :icon="['fas', 'clock']" /> Attente de validation</span>
+              <span v-if="v === 'DRAFT'" class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><font-awesome-icon :icon="['fas', 'file-pen']" /> Brouillon</span>
+              <span v-if="v === 'REFUSED'" class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"><font-awesome-icon :icon="['fas', 'circle-xmark']" /> Publication refusée</span>
+              <span v-if="v === 'PUBLISHED'" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300"><font-awesome-icon :icon="['fas', 'circle-check']" /> Publication acceptée</span>
+            </div>
+            <div v-else-if="key === 'content'">
+              {{ v.substring(0, 100) }}...
+            </div>
+            <div v-else-if="key === 'user'">
+              <div class="author flex gap-4 items-center">
+                <div class="avatar">
+                  <img class="w-11 h-11 rounded-3xl" :src="v.avatar" :alt="v.username" />
+                </div>
+                <div class="infos">
+                  <h2 class="text-xl font-bold">{{ v.username }}</h2>
+                </div>
+              </div>
+            </div>
+            <div v-else-if="key === 'category'">
+              <RouterLink :to="'/categories/' + v.id">
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{ v.name }}</span>
+              </RouterLink>
+            </div>
+            <div v-else>
+              {{ v }}
+            </div>
           </td>
           <td v-if="data.actions != null" class="px-6 py-4">
-            <div v-for="action in data.actions">
-              <a :href="action.action + data.values[0].id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-1">{{ action.label }}</a>
+<!--            <div v-for="action in data.actions">-->
+<!--              <a :href="action.action + data.values[0].id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-1">{{ action.label }}</a>-->
+<!--            </div>-->
+            <div class="inline-flex rounded-md shadow-sm" role="group">
+              <div v-for="(action, ka) in data.actions" :key="ka">
+                <RouterLink :to="action.action + data.values[0].id">
+                  <button type="button" :class="`border px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:focus:bg-gray-700 dark:hover:bg-gray-700 ${ka === 'delete' ? 'hover:bg-red-500' : 'hover:bg-gray-900' }`">
+                    {{ action.label }}
+                  </button>
+                </RouterLink>
+              </div>
             </div>
           </td>
         </tr>

@@ -33,9 +33,19 @@ const router = createRouter({
       component: () => import('../views/MyGuides.vue')
     },
     {
+      path: '/my-guides/delete/:id',
+      name: 'delete-guide',
+      component: () => import('../views/MyGuides.vue')
+    },
+    {
+      path: '/edit-guide/:id',
+      name: 'edit-guide',
+      component: () => import('../views/FormGuide.vue')
+    },
+    {
       path: '/create-guide',
       name: 'create-guide',
-      component: () => import('../views/CreateGuide.vue')
+      component: () => import('../views/FormGuide.vue')
     },
     {
       path: '/guides/:id',
