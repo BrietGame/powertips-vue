@@ -1,19 +1,24 @@
 <template>
-  <div class="container">
-    <h1>Guides</h1>
-    <Table v-if="guides != null" :data="guides" />
-  </div>
+  <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Mes guides</h1>
+
+  <Table v-if="guides != null" :data="guides" />
 </template>
 
 <script>
+import {utils} from "@/utils";
 import Table from "@/components/Table.vue";
 
 export default {
-  name: 'Guides',
+  name: 'MyGuides',
   components: {Table},
   data() {
     return {
       guides: null
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.getUser;
     }
   },
   methods: {
@@ -88,7 +93,7 @@ export default {
           }
         ],
         labels: ['Id', 'Title', 'Excerpt', 'Content', 'Media', 'Stats', 'Status', 'User', 'Category', 'Création', 'Modification', 'Actions'],
-        values: this.$store.state.guides,
+        values: this.$store.getters.getGuides,
         actions: {
           view: {
             label: 'View',
@@ -107,7 +112,9 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('findAllGuides');
+    const decoded = utils.decodeToken();
+    this.$store.dispatch('findUserById', decoded.id);
+    this.$store.dispatch('findAllGuidesByUserId', decoded.id);
     setTimeout(() => {
       this.setGuides();
     }, 300)

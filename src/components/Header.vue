@@ -69,11 +69,6 @@
 <script>
 export default {
   name: 'Header',
-  data() {
-    return {
-      token: null
-    }
-  },
   computed: {
     categories() {
       console.log(this.$store.getters.getCategories)
@@ -84,18 +79,14 @@ export default {
     }
   },
   methods: {
-    getToken() {
-      this.token = localStorage.getItem('token');
-    },
     logout() {
       localStorage.removeItem('token');
       this.$store.dispatch('logout');
       this.$router.push('/');
-      this.getToken();
     }
   },
   mounted() {
-    this.getToken();
+    console.log(this.$store.getters.getIsConnected)
   }
 }
 </script>

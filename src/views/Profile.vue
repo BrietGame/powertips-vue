@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { utils } from '../utils/index';
+
 export default {
   name: 'Profile',
   computed: {
@@ -51,12 +53,7 @@ export default {
   },
   created() {
     // Decode JWT token
-    const token = localStorage.getItem('token');
-    if (token === null) {
-      this.$router.push('/login');
-    }
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    console.log(decoded);
+    const decoded = utils.decodeToken();
     this.$store.dispatch('findUserById', decoded.id);
     this.$store.dispatch('findAllGuidesByUserId', decoded.id);
   }

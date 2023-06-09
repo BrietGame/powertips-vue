@@ -19,7 +19,7 @@ export const store = createStore({
         notes: [],
         note: null,
         moyNote: null,
-        isConnected: false
+        isConnected: !!localStorage.getItem('token')
     },
     getters: {
         getUsers: state => state.users,
@@ -28,7 +28,11 @@ export const store = createStore({
         getCategory: state => state.category,
         getComments: state => state.comments,
         getComment: state => state.comment,
-        getGuides: state => state.guides,
+        getGuides: state => state.guides.map(guide => {
+            guide.created_at = new Date(guide.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+            guide.updated_at = new Date(guide.updated_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+            return guide;
+        }),
         getGuide: state => state.guide,
         getNotes: state => state.notes,
         getNote: state => state.note,
