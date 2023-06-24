@@ -20,7 +20,7 @@
   
   <footer>
     <div class="container flex flex-col items-center justify-between px-4 py-8 mx-auto sm:flex-row">
-      <p class="text-sm text-gray-500 dark:text-gray-400">© 2021 PowerTips, Inc. Tous droits réservés.</p>
+      <p class="text-sm text-gray-500 dark:text-gray-400">© 2023 PowerTips, Inc. Tous droits réservés.</p>
       <div class="flex mt-4 space-x-4 sm:mt-0">
         <RouterLink to="/about" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white">À propos</RouterLink>
         <RouterLink to="/contact" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white">Contact</RouterLink>
