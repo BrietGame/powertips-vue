@@ -30,7 +30,7 @@ export default {
   name: 'Home',
   computed: {
     guides() {
-      return this.$store.state.guides
+      return this.$store.getters.getGuides;
     }
   },
   mounted() {

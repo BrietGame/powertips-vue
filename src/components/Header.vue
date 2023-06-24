@@ -71,7 +71,6 @@ export default {
   name: 'Header',
   computed: {
     categories() {
-      console.log(this.$store.getters.getCategories)
       return this.$store.getters.getCategories;
     },
     isConnected() {
@@ -86,7 +85,15 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.getters.getIsConnected)
+    this.$store.dispatch('findAllCategories');
   }
 }
 </script>
+
+<style>
+nav {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+}
+</style>
