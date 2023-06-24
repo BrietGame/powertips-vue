@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Login from "@/views/Login.vue";
-import Register from "@/views/Register.vue";
 import Admin from "@/views/admin/Admin.vue";
 
 const router = createRouter({
@@ -15,27 +13,27 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: () => import('../views/auth/Login.vue')
     },
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: () => import('../views/auth/Register.vue')
     },
     {
       path: '/profile',
       name: 'profile',
-      component: () => import('../views/Profile.vue')
+      component: () => import('../views/profile/Profile.vue')
     },
     {
       path: '/my-guides',
       name: 'my-guides',
-      component: () => import('../views/MyGuides.vue')
+      component: () => import('../views/profile/MyGuides.vue')
     },
     {
       path: '/my-guides/delete/:id',
       name: 'delete-guide',
-      component: () => import('../views/MyGuides.vue')
+      component: () => import('../views/profile/MyGuides.vue')
     },
     {
       path: '/edit-guide/:id',
@@ -132,6 +130,31 @@ const router = createRouter({
       path: '/admin/notes/create',
       name: 'admin-notes-create',
       component: () => import('../views/admin/notes/FormNote.vue')
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: () => import('../views/powertips/About.vue')
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('../views/powertips/Contact.vue')
+    },
+    {
+      path: '/legals',
+      name: 'legals',
+      component: () => import('../views/powertips/Legals.vue')
+    },
+    {
+      path: '/terms',
+      name: 'terms',
+      component: () => import('../views/powertips/Terms.vue')
+    },
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: () => import('../views/powertips/Privacy.vue')
     }
     // {
     //   path: '/about',

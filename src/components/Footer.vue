@@ -24,6 +24,7 @@
       <div class="flex mt-4 space-x-4 sm:mt-0">
         <RouterLink to="/about" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white">À propos</RouterLink>
         <RouterLink to="/contact" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white">Contact</RouterLink>
+        <RouterLink to="/legals" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white">Mentions légales</RouterLink>
         <RouterLink to="/terms" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white">Conditions d'utilisation</RouterLink>
         <RouterLink to="/privacy" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white">Politique de confidentialité</RouterLink>
       </div>
