@@ -117,14 +117,7 @@ export const store = createStore({
             });
         },
         logout({commit}) {
-            return new Promise((resolve, reject) => {
-                authService.logout().then((response) => {
-                    commit('CONNECTED', false);
-                    resolve(response);
-                }).catch((error) => {
-                    reject(error);
-                });
-            });
+            commit('CONNECTED', false);
         },
         findAllUsers({commit}) {
             return new Promise((resolve, reject) => {

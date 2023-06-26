@@ -35,7 +35,8 @@ export default {
         this.$store.dispatch('auth', {
           email: this.email,
           password: this.password
-        }).then(
+        })
+        .then(
           (response) => {
             console.log(response.data.token);
             localStorage.setItem('token', response.data.token);
@@ -48,6 +49,15 @@ export default {
             });
           }
         )
+        .catch(
+          (error) => {
+            console.log(error);
+            this.$notify({
+              title: 'Erreur',
+              text: 'Identifiants incorrects',
+              type: 'error'
+            });
+          });
       } else {
         this.$notify({
           title: 'Error',

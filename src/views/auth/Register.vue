@@ -57,10 +57,7 @@ export default {
     async onSubmit() {
       await this.emailAlreadyExist()
       if (this.email && this.username && this.password && this.confirmPassword) {
-        console.log(1)
-        console.log(this.emailCheck, this.passwordCheck)
         if (this.emailCheck && this.passwordCheck) {
-          console.log(2)
           this.$store.dispatch('register', {
             email: this.email,
             username: this.username,
@@ -69,7 +66,6 @@ export default {
           })
           this.$router.push('/login')
           this.$notify({
-            group: 'auth',
             type: 'success',
             title: 'Success',
             text: 'Account created'

@@ -6,8 +6,5 @@ export default {
     },
     register(user) {
         return axios.post(import.meta.env.VITE_BASE_URL + '/auth/register', user);
-    },
-    logout() {
-        return axios.post(import.meta.env.VITE_BASE_URL + '/auth/logout');
     }
 }
