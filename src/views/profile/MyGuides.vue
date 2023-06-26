@@ -106,10 +106,12 @@ export default {
     },
     deleteGuide(id) {
       console.log("delete guide" + id)
-      this.$store.dispatch('deleteGuide', id);
-      this.refreshGuides();
+      this.$store.dispatch('deleteGuide', id).then(() => {
+        this.refreshGuides();
+      });
     },
     refreshGuides() {
+      this.guides = null;
       const decoded = utils.decodeToken();
       this.$store.dispatch('findAllGuidesByUserId', decoded.id);
       setTimeout(() => {

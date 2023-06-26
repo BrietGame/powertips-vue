@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-if="guides != null">
     <div v-for="(guide, i) in guides" :key="i" class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div class="img-guide">
         <img class="relative rounded-t-lg " :src="guide.media != null ? guide.media : 'https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'" alt="" />
@@ -25,6 +25,7 @@
       </div>
     </div>
   </section>
+  <Loading v-else />
   <section class="bg-white dark:bg-gray-900">
     <div class="grid px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
       <div class="mr-auto place-self-center lg:col-span-7">
@@ -43,8 +44,11 @@
 </template>
 
 <script>
+import Loading from "@/components/Loading.vue";
+
 export default {
   name: 'Home',
+  components: {Loading},
   computed: {
     guides() {
       return this.$store.getters.getGuides;
