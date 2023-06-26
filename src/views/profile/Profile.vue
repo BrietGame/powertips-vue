@@ -1,7 +1,7 @@
 <template>
   <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Mon profil</h1>
 
-  <div class="flex justify-between">
+  <div v-if="user != null" class="flex justify-between">
     <div class="flex flex-col gap-8">
       <div class="author flex gap-4 items-center">
         <div class="avatar">
@@ -36,13 +36,16 @@
       </div>
     </div>
   </div>
+  <Loading v-else />
 </template>
 
 <script>
 import { utils } from '../../utils/index';
+import Loading from "@/components/Loading.vue";
 
 export default {
   name: 'Profile',
+  components: {Loading},
   computed: {
     user() {
       return this.$store.getters.getUser;

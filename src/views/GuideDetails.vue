@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div v-if="guide != null">
     <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{ guide.title }}</h1>
     <div class="metadata">
       <p>Publié le {{ guide.created_at == guide.updated_at ? formatDate(guide.created_at) : formatDate(guide.updated_at) }}</p>
       <ul>
-        <li><font-awesome-icon :icon="['fas', 'eye']" /> vue</li>
+        <li><font-awesome-icon :icon="['fas', 'eye']" />{{guide.stats != null ? guide.stats.views : ''}} vue(s)</li>
         <li><font-awesome-icon :icon="['fas', 'comment-dots']" /> {{ comments.length }}</li>
         <li v-if="note !== null"><font-awesome-icon v-for="n in Array.from({length: note})" :icon="['fa', 'star']" /></li>
       </ul>
@@ -20,7 +20,7 @@
       <div class="content">
         <div v-html="guide.content"></div>
       </div>
-      <div class="author flex flex-col items-center">
+      <div v-if="author != null" class="author flex flex-col items-center">
         <div class="avatar">
           <img class="w-32 h-32 rounded-3xl" :src="author.avatar" :alt="author.username" />
         </div>
@@ -28,12 +28,13 @@
           <h2 class="text-xl font-bold">{{ author.username }}</h2>
         </div>
       </div>
+      <Loading v-else />
     </section>
 
     <section>
       <h2 class="text-2xl font-bold mb-4">Commentaires</h2>
 
-      <form @submit.prevent="onSubmitComment" v-if="this.$store.getters.getUser != null">
+      <form @submit.prevent="onSubmitComment" v-if="userConnected">
         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
           <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
             <label for="comment" class="sr-only">Ton commentaire</label>
@@ -48,36 +49,37 @@
       </form>
       <p class="ml-auto text-xs text-gray-500 dark:text-gray-400">Remember, contributions to this topic should follow our <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Community Guidelines</a>.</p>
 
-      <div class="py-4" v-for="comment in comments">
+      <div v-if="comments != null" class="py-4" v-for="comment in comments">
         <div class="author flex gap-2 items-center">
-          <div class="avatar">
-            <img class="w-10 h-10 rounded-3xl" :src="author.avatar" :alt="author.username" />
-          </div>
-          <div class="infos">
-            <h2 class="text-xl font-bold">{{ author.username }}</h2>
-          </div>
+<!--          <div class="avatar">-->
+<!--            <img class="w-10 h-10 rounded-3xl" :src="author.avatar" :alt="author.username" />-->
+<!--          </div>-->
+<!--          <div class="infos">-->
+<!--            <h2 class="text-xl font-bold">{{ author.username }}</h2>-->
+<!--          </div>-->
         </div>
         <div class="py-2" v-html="comment.content"></div>
       </div>
+      <Loading v-else />
     </section>
   </div>
+  <Loading v-else />
 </template>
 
 <script>
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import Loading from "@/components/Loading.vue";
 
 export default {
   name: 'GuideDetails',
-  components: {FontAwesomeIcon},
+  components: {Loading, FontAwesomeIcon},
   data() {
     return {
-      newComment: null
+      newComment: null,
+      guide: null
     }
   },
   computed: {
-    guide() {
-      return this.$store.getters.getGuide;
-    },
     note() {
       console.log('getMoyNote', this.$store.getters.getMoyNote)
       return this.$store.getters.getMoyNote !== undefined ? Math.min(this.$store.getters.getMoyNote, 5) : null;
@@ -89,7 +91,6 @@ export default {
       return this.$store.getters.getUsers.find(user => user.id === this.guide.user_id);
     },
     userConnected() {
-      console.log('getUser', this.$store.getters.getUser)
       return this.$store.getters.getUser;
     }
   },
@@ -114,11 +115,22 @@ export default {
   created() {
     if (this.$route.params.id !== null) {
       this.$store.dispatch('findGuideById', this.$route.params.id).then(() => {
+        this.guide = this.$store.getters.getGuide;
         if (this.guide === null) {
           this.$router.push('/guides');
         }
-        // console.log('findUserById', this.guide.user_id)
-        // this.$store.dispatch('findUserById', this.guide.user_id);
+        // Ajouter une vue au guide
+        this.guide.stats = JSON.parse(this.guide.stats);
+        if (this.guide.stats == null) {
+          this.guide.stats = {
+            views: 0
+          }
+        }
+        this.guide.stats.views = this.guide.stats.views + 1;
+        this.guide.stats = JSON.stringify(this.guide.stats)
+        this.$store.dispatch('updateGuide', this.guide);
+        // Transformer un json en objet
+        this.guide.stats = JSON.parse(this.guide.stats);
       });
       this.$store.dispatch('findAllUsers');
       this.$store.dispatch('findNoteMoyenneByGuideId', this.$route.params.id);
