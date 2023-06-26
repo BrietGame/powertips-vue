@@ -41,6 +41,11 @@ export default {
             localStorage.setItem('token', response.data.token);
             // Emettre un évènement pour que le composant Header puisse mettre à jour le state
             this.$router.push('/profile');
+            this.$notify({
+              title: 'Success',
+              text: 'Vous êtes connecté',
+              type: 'success'
+            });
           }
         )
       } else {

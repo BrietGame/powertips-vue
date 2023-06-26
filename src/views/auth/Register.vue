@@ -52,22 +52,27 @@ export default {
     },
     async emailAlreadyExist () {
       await this.$store.dispatch('findUserByEmail', this.email)
-      console.log('userByEmail', this.$store.getters.getUser)
-      console.log(this.$store.getters.getUser != null)
       await this.$store.getters.getUser != null ? this.emailCheck = false : this.emailCheck = true
     },
-    onSubmit() {
-      this.emailAlreadyExist()
+    async onSubmit() {
+      await this.emailAlreadyExist()
       if (this.email && this.username && this.password && this.confirmPassword) {
-        console.log('emailCheck', this.emailCheck)
-        console.log('passwordCheck', this.passwordCheck)
+        console.log(1)
+        console.log(this.emailCheck, this.passwordCheck)
         if (this.emailCheck && this.passwordCheck) {
-          console.log('register')
+          console.log(2)
           this.$store.dispatch('register', {
             email: this.email,
             username: this.username,
             password: this.password,
             roles: 'USER'
+          })
+          this.$router.push('/login')
+          this.$notify({
+            group: 'auth',
+            type: 'success',
+            title: 'Success',
+            text: 'Account created'
           })
         } else {
           this.$notify({

@@ -88,6 +88,12 @@ export default {
     this.$store.dispatch('findAllCategories');
     if (!this.$store.getters.getIsConnected) {
       this.$router.push('/login');
+      this.$notify({
+        group: 'notify',
+        title: 'Erreur',
+        text: 'Vous devez être connecté pour accéder à cette page',
+        type: 'error'
+      });
     }
   },
   mounted() {

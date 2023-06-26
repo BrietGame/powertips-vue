@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { utils } from '../utils/index';
+import { utils } from '../../utils/index';
 
 export default {
   name: 'Profile',
