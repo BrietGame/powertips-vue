@@ -34,12 +34,12 @@
               </RouterLink>
             </li>
             <li v-if="isConnected">
-              <RouterLink to="/profile" class="ease-in-out duration-300 block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              <RouterLink to="/profile" class="ease-in-out duration-300 block px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-white hover:outline hover:outline-2 hover:outline-gray-600 hover:text-black">
                 Profil
               </RouterLink>
             </li>
             <li v-if="isConnected">
-              <RouterLink to="/logout" class="ease-in-out duration-300 block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              <RouterLink to="/logout" class="ease-in-out duration-300 block px-4 py-2 outline outline-2 outline-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                 Se déconnecter
               </RouterLink>
             </li>
