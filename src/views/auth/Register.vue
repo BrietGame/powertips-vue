@@ -68,14 +68,14 @@ export default {
           this.$notify({
             type: 'success',
             title: 'Success',
-            text: 'Account created'
+            text: 'Compte créé avec succès'
           })
         } else {
           this.$notify({
             group: 'auth',
             type: 'error',
             title: 'Error',
-            text: 'Email already exists'
+            text: 'L\'email existe déjà'
           })
         }
       } else {
