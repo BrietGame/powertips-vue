@@ -4,7 +4,7 @@ export class utils {
     static decodeToken() {
         const token = localStorage.getItem('token');
         if (token === null) {
-            this.$router.push('/login');
+            return null
         }
         return JSON.parse(atob(token.split('.')[1]));
     }

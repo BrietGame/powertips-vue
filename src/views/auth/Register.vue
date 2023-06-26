@@ -62,7 +62,7 @@ export default {
             email: this.email,
             username: this.username,
             password: this.password,
-            roles: 'USER'
+            roles: ['ROLE_USER']
           })
           this.$router.push('/login')
           this.$notify({
