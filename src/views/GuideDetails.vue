@@ -10,10 +10,10 @@
       </ul>
     </div>
     <div class="status text-center py-10">
-      <span v-if="guide.status == 'WAITING'" class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"><font-awesome-icon :icon="['fas', 'clock']" /> Attente de validation</span>
-      <span v-if="guide.status == 'DRAFT'" class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><font-awesome-icon :icon="['fas', 'file-pen']" /> Brouillon</span>
-      <span v-if="guide.status == 'REFUSED'" class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"><font-awesome-icon :icon="['fas', 'circle-xmark']" /> Publication refusée</span>
-      <span v-if="guide.status == 'PUBLISHED'" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300"><font-awesome-icon :icon="['fas', 'circle-check']" /> Publication acceptée</span>
+      <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'WAITING'" class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"><font-awesome-icon :icon="['fas', 'clock']" /> Attente de validation</span>
+      <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'DRAFT'" class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><font-awesome-icon :icon="['fas', 'file-pen']" /> Brouillon</span>
+      <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'REFUSED'" class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"><font-awesome-icon :icon="['fas', 'circle-xmark']" /> Publication refusée</span>
+      <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'PUBLISHED'" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300"><font-awesome-icon :icon="['fas', 'circle-check']" /> Publication acceptée</span>
     </div>
 
     <section class="flex justify-between">
@@ -86,6 +86,10 @@ export default {
       return this.$store.getters.getComments !== undefined ? this.$store.getters.getComments : null;
     },
     author() {
+      return this.$store.getters.getUsers.find(user => user.id === this.guide.user_id);
+    },
+    userConnected() {
+      console.log('getUser', this.$store.getters.getUser)
       return this.$store.getters.getUser;
     }
   },
@@ -95,7 +99,7 @@ export default {
       return dateFormated.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
     },
     onSubmitComment() {
-      if (this.newComment != null) {
+      if (this.newComment != null && this.getUser != null) {
         this.$store.dispatch('createComment', {
           content: this.newComment,
           guide_id: this.guide.id,
@@ -113,9 +117,10 @@ export default {
         if (this.guide === null) {
           this.$router.push('/guides');
         }
-        console.log('findUserById', this.guide.user_id)
-        this.$store.dispatch('findUserById', this.guide.user_id);
+        // console.log('findUserById', this.guide.user_id)
+        // this.$store.dispatch('findUserById', this.guide.user_id);
       });
+      this.$store.dispatch('findAllUsers');
       this.$store.dispatch('findNoteMoyenneByGuideId', this.$route.params.id);
       this.$store.dispatch('findAllCommentsByGuidId', this.$route.params.id);
     } else {
