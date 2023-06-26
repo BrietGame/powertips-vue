@@ -1,6 +1,5 @@
 <template>
-  <div class="container">
-    <h1>Users</h1>
+  <div>
     <Table v-if="users != null" :data="users" />
   </div>
 </template>

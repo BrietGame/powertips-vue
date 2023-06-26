@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <h1 v-if="!isEdit">Créer un utilisateur</h1>
-    <h1 v-if="isEdit">Modifier l'utilisateur : {{ user.email }}</h1>
+    <h1 v-if="!isEdit" class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Créer un utilisateur</h1>
+    <h1 v-if="isEdit" class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Modifier l'utilisateur : {{ user.email }}</h1>
 
-    {{ user }}
     <form @submit.prevent="onSubmit" v-if="user !== null">
       <div class="mb-6">
         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Adresse mail</label>

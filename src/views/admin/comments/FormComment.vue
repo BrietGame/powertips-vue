@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <h1 v-if="!isEdit">Créer un commentaire</h1>
-    <h1 v-if="isEdit">Modifier le commentaire : {{ comment.id }}</h1>
+    <h1 v-if="!isEdit" class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Créer un commentaire</h1>
+    <h1 v-if="isEdit" class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Modifier le commentaire : {{ comment.id }}</h1>
 
-    {{ comment }}
     <form @submit.prevent="onSubmit" v-if="comment !== null">
       <div class="mb-6">
         <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>

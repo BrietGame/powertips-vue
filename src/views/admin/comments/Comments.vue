@@ -1,6 +1,5 @@
 <template>
-  <div class="container">
-    <h1>Commentaires</h1>
+  <div>
     <Table v-if="comments != null" :data="comments" />
   </div>
 </template>

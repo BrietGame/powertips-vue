@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <h1 v-if="!isEdit">Créer une catégorie</h1>
-    <h1 v-if="isEdit">Modifier la catégorie : {{ category.name }}</h1>
+    <h1 v-if="!isEdit" class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Créer une catégorie</h1>
+    <h1 v-if="isEdit" class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Modifier la catégorie : {{ category.name }}</h1>
 
-    {{ category }}
     <form @submit.prevent="onSubmit" v-if="category !== null">
       <div class="mb-6">
         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
