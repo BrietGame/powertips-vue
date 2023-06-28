@@ -39,7 +39,6 @@ export default {
   },
   computed: {
     categories() {
-      console.log(this.$store.getters.getCategories)
       return this.$store.getters.getCategories;
     },
     guide() {
@@ -89,7 +88,6 @@ export default {
     if (!this.$store.getters.getIsConnected) {
       this.$router.push('/login');
       this.$notify({
-        group: 'notify',
         title: 'Erreur',
         text: 'Vous devez être connecté pour accéder à cette page',
         type: 'error'

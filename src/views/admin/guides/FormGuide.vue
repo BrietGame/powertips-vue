@@ -58,13 +58,11 @@ export default {
   },
   computed: {
     categories() {
-      console.log(this.$store.getters.getCategories)
       return this.$store.getters.getCategories;
     }
   },
   methods: {
     onSubmit() {
-      console.log(this.guide)
       if (this.isEdit) {
         this.$store.dispatch('updateGuide', this.guide).then(() => {
           this.$router.push('/admin/guides');
@@ -77,15 +75,11 @@ export default {
     }
   },
   created() {
-    console.info('findAllGuides')
     this.$store.dispatch('findAllGuides');
-    console.log(this.$route.params.id)
     if (this.$route.params.id) {
-      console.info('findGuideById')
       this.$store.dispatch('findGuideById', this.$route.params.id).then(() => {
         this.guide = this.$store.getters.getGuide;
         this.isEdit = true;
-        console.log(this.guide)
       });
     }
   }

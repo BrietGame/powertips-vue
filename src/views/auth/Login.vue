@@ -38,7 +38,6 @@ export default {
         })
         .then(
           (response) => {
-            console.log(response.data.token);
             localStorage.setItem('token', response.data.token);
             // Emettre un évènement pour que le composant Header puisse mettre à jour le state
             this.$router.push('/profile');
@@ -51,7 +50,6 @@ export default {
         )
         .catch(
           (error) => {
-            console.log(error);
             this.$notify({
               title: 'Erreur',
               text: 'Identifiants incorrects',

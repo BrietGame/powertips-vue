@@ -62,9 +62,6 @@
             </div>
           </td>
           <td v-if="data.actions != null" class="px-6 py-4">
-<!--            <div v-for="action in data.actions">-->
-<!--              <a :href="action.action + data.values[0].id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-1">{{ action.label }}</a>-->
-<!--            </div>-->
             <div class="inline-flex rounded-md shadow-sm gap-4" role="group">
               <div v-for="(action, ka) in data.actions" :key="ka">
                 <RouterLink :to="action.action + data.values[0].id">
