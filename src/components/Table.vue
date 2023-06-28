@@ -65,10 +65,10 @@
 <!--            <div v-for="action in data.actions">-->
 <!--              <a :href="action.action + data.values[0].id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-1">{{ action.label }}</a>-->
 <!--            </div>-->
-            <div class="inline-flex rounded-md shadow-sm" role="group">
+            <div class="inline-flex rounded-md shadow-sm gap-4" role="group">
               <div v-for="(action, ka) in data.actions" :key="ka">
                 <RouterLink :to="action.action + data.values[0].id">
-                  <button type="button" :class="`border px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:focus:bg-gray-700 dark:hover:bg-gray-700 ${ka === 'delete' ? 'hover:bg-red-500' : 'hover:bg-gray-900' }`">
+                  <button type="button" :class="`outline outline-2 outline-gray-600 px-4 py-2 text-sm font-medium text-gray-900 bg-transparent hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white ${ka === 'delete' ? 'hover:bg-red-500 hover:outline-red-500' : 'hover:bg-blue-600 hover:outline-blue-600' }`">
                     {{ action.label }}
                   </button>
                 </RouterLink>
