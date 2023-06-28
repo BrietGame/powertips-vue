@@ -1,15 +1,20 @@
 <template>
   <div>
     <Table v-if="guides != null" :data="guides" />
+    <Loading v-else />
+    <div class="text-center mt-3">
+      <button @click="refresh" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Actualiser la liste</button>
+    </div>
   </div>
 </template>
 
 <script>
 import Table from "@/components/Table.vue";
+import Loading from "@/components/Loading.vue";
 
 export default {
   name: 'Guides',
-  components: {Table},
+  components: {Loading, Table},
   data() {
     return {
       guides: null
@@ -17,6 +22,7 @@ export default {
   },
   methods: {
     setGuides() {
+      console.log("setGuides")
       this.guides = {
         models: [
           {
@@ -66,26 +72,30 @@ export default {
         values: this.$store.getters.getGuidesForList,
         actions: {
           view: {
-            label: 'View',
+            label: 'Voir',
             action: '/guides/'
           },
           edit: {
-            label: 'Edit',
-            action: '/edit-guide/'
+            label: 'Editer',
+            action: '/admin/guides/edit/'
           },
           delete: {
-            label: 'Delete',
-            action: '/my-guides/delete/'
+            label: 'Supprimer',
+            action: '/admin/guides/delete/'
           }
         }
       }
+    },
+    refresh() {
+      this.guides = null;
+      this.$store.dispatch('findAllGuides');
+      setTimeout(() => {
+        this.setGuides();
+      }, 300)
     }
   },
   mounted() {
-    this.$store.dispatch('findAllGuides');
-    setTimeout(() => {
-      this.setGuides();
-    }, 300)
+    this.refresh();
   }
 }
 </script>

@@ -107,6 +107,11 @@ const router = createRouter({
       component: () => import('../views/admin/guides/FormGuide.vue')
     },
     {
+      path: '/admin/guides/delete/:id',
+      name: 'admin-guides-delete',
+      component: () => import('../views/admin/guides/Guides.vue')
+    },
+    {
       path: '/admin/guides/create',
       name: 'admin-guides-create',
       component: () => import('../views/admin/guides/FormGuide.vue')
