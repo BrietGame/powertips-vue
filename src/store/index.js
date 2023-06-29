@@ -384,7 +384,6 @@ export const store = createStore({
         findNoteMoyenneByGuideId({commit}, id) {
             return new Promise((resolve, reject) => {
                 noteService.findMoyenneByGuideId(id).then((response) => {
-                    console.log(response);
                     commit('MOY_NOTE', response.data);
                     resolve(response);
                 }).catch((error) => {

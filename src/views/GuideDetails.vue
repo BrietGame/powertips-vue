@@ -9,12 +9,13 @@
         <li v-if="note !== null"><font-awesome-icon v-for="n in Array.from({length: note})" :icon="['fa', 'star']" /></li>
       </ul>
     </div>
-    <div class="status text-center py-10">
+    <div v-if="author != null" class="status text-center py-10">
       <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'WAITING'" class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"><font-awesome-icon :icon="['fas', 'clock']" /> Attente de validation</span>
       <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'DRAFT'" class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><font-awesome-icon :icon="['fas', 'file-pen']" /> Brouillon</span>
       <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'REFUSED'" class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"><font-awesome-icon :icon="['fas', 'circle-xmark']" /> Publication refusée</span>
       <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'PUBLISHED'" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300"><font-awesome-icon :icon="['fas', 'circle-check']" /> Publication acceptée</span>
     </div>
+    <Loading v-else />
 
     <section class="flex justify-between">
       <div class="content">
@@ -33,7 +34,12 @@
 
     <section>
       <h2 class="text-2xl font-bold mb-4">Commentaires</h2>
-
+      <div class="py-5">
+        <p>Donnez une note</p>
+        <div class="flex items-center">
+          <font-awesome-icon v-for="(n, i) in Array.from({length: 5})" :icon="['fa', 'star']" @click="addNote(i)" />
+        </div>
+      </div>
       <form @submit.prevent="onSubmitComment" v-if="userConnected">
         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
           <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
@@ -81,8 +87,7 @@ export default {
   },
   computed: {
     note() {
-      console.log('getMoyNote', this.$store.getters.getMoyNote)
-      return this.$store.getters.getMoyNote !== undefined ? Math.min(this.$store.getters.getMoyNote, 5) : null;
+      return this.$store.getters.getMoyNote;
     },
     comments() {
       return this.$store.getters.getComments !== undefined ? this.$store.getters.getComments : null;
@@ -98,6 +103,20 @@ export default {
     formatDate(date) {
       let dateFormated = new Date(date);
       return dateFormated.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+    },
+    addNote(i) {
+      console.log('addNote', i + 1)
+      this.$store.dispatch('createNote', {
+        score: i + 1,
+        guide_id: this.guide.id,
+        user_id: this.$store.getters.getUser.id
+      }).then(() => {
+        this.$notify({
+          title: 'Note ajoutée',
+          text: 'Votre note a bien été ajoutée !',
+          type: 'success'
+        });
+      });
     },
     onSubmitComment() {
       if (this.newComment != null && this.getUser != null) {
