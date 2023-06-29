@@ -39,9 +39,35 @@
           </div>
         </div>
       </div>
-      <GuideCard v-if="guides != null" :guides="guides" />
-      <Loading v-else />
+      <div>
+        <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+          <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+            <li class="mr-2" role="presentation">
+              <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="guides-tab" data-tabs-target="#guides" type="button" role="tab" aria-controls="guides" aria-selected="false">Guides</button>
+            </li>
+            <li class="mr-2" role="presentation">
+              <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="comments-tab" data-tabs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Commentaires</button>
+            </li>
+            <li class="mr-2" role="presentation">
+              <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="notes-tab" data-tabs-target="#notes" type="button" role="tab" aria-controls="notes" aria-selected="false">Notes</button>
+            </li>
+          </ul>
+        </div>
+        <div id="myTabContent">
+          <div class="hidden" id="guides" role="tabpanel" aria-labelledby="guides-tab">
+            <Guides :user_id="user.id" />
+          </div>
+          <div class="hidden" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+            <Comments :user_id="user.id" />
+          </div>
+          <div class="hidden" id="notes" role="tabpanel" aria-labelledby="notes-tab">
+            <Notes :user_id="user.id" />
+          </div>
+        </div>
+      </div>
     </div>
+
+
   </div>
 
   <Loading v-else />
@@ -50,10 +76,13 @@
 <script>
 import Loading from "@/components/Loading.vue";
 import GuideCard from "@/components/GuideCard.vue";
+import Guides from "@/views/admin/guides/Guides.vue";
+import Comments from "@/views/admin/comments/Comments.vue";
+import Notes from "@/views/admin/notes/Notes.vue";
 
 export default {
   name: 'UserDetails',
-  components: {GuideCard, Loading},
+  components: {Notes, Comments, Guides, GuideCard, Loading},
   computed: {
     user() {
       return this.$store.getters.getUser;

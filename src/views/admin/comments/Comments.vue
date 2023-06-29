@@ -14,6 +14,9 @@ import Loading from "@/components/Loading.vue";
 
 export default {
   name: 'Comments',
+  props: {
+    user_id: Number
+  },
   components: {Loading, Table},
   data() {
     return {
@@ -66,7 +69,11 @@ export default {
     },
     refresh() {
       this.comments = null;
-      this.$store.dispatch('findAllComments');
+      if (this.user_id !== undefined) {
+        this.$store.dispatch('findCommentsByUser', this.user_id);
+      } else {
+        this.$store.dispatch('findAllComments');
+      }
       setTimeout(() => {
         this.setComments();
       }, 300)

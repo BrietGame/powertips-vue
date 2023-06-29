@@ -14,6 +14,9 @@ import Loading from "@/components/Loading.vue";
 
 export default {
   name: 'Guides',
+  props: {
+    user_id: Number
+  },
   components: {Loading, Table},
   data() {
     return {
@@ -88,6 +91,11 @@ export default {
     },
     refresh() {
       this.guides = null;
+      if (this.user_id !== undefined) {
+        this.$store.dispatch('findGuidesByUser', this.user_id);
+      } else {
+        this.$store.dispatch('findAllGuides');
+      }
       this.$store.dispatch('findAllGuides');
       setTimeout(() => {
         this.setGuides();
