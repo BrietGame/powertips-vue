@@ -72,6 +72,11 @@ const router = createRouter({
       component: () => import('../views/admin/users/Users.vue')
     },
     {
+      path: '/admin/users/:id',
+      name: 'admin-users-details',
+      component: () => import('../views/admin/users/UserDetails.vue')
+    },
+    {
       path: '/admin/users/edit/:id',
       name: 'admin-users-edit',
       component: () => import('../views/admin/users/FormUser.vue')

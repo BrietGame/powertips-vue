@@ -50,7 +50,7 @@ export default {
         actions: {
           view: {
             label: 'Voir',
-            action: '/users/'
+            action: '/admin/users/'
           },
           edit: {
             label: 'Editer',
