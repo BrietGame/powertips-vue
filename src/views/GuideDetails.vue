@@ -67,6 +67,10 @@
         <div class="py-2" v-html="comment.content"></div>
       </div>
       <Loading v-else />
+
+      <button @click="reportGuide" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+        <font-awesome-icon :icon="['fas', 'flag']" /> Signaler le guide
+      </button>
     </section>
   </div>
   <Loading v-else />
@@ -135,6 +139,18 @@ export default {
           type: 'error'
         });
       }
+    },
+    reportGuide() {
+      this.$store.dispatch('createReport', {
+        guide_id: this.guide.id,
+        user_id: this.$store.getters.getUser.id
+      }).then(() => {
+        this.$notify({
+          title: 'Guide signalé',
+          text: 'Le guide a bien été signalé !',
+          type: 'success'
+        });
+      });
     }
   },
   created() {

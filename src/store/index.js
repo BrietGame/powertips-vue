@@ -5,6 +5,7 @@ import categoryService from "@/services/categoryService";
 import commentService from "@/services/commentService";
 import guideService from "@/services/guideService";
 import noteService from "@/services/noteService";
+import reportService from "@/services/reportService";
 
 export const store = createStore({
     state: {
@@ -18,6 +19,8 @@ export const store = createStore({
         guide: null,
         notes: [],
         note: null,
+        reports: [],
+        report: null,
         moyNote: null,
         isConnected: !!localStorage.getItem('token')
     },
@@ -55,6 +58,8 @@ export const store = createStore({
         getGuide: state => state.guide,
         getNotes: state => state.notes,
         getNote: state => state.note,
+        getReports: state => state.reports,
+        getReport: state => state.report,
         getMoyNote: state => state.moyNote,
         getIsConnected: state => state.isConnected
     },
@@ -91,6 +96,12 @@ export const store = createStore({
         },
         NOTE(state, note) {
             state.note = note.data;
+        },
+        REPORTS(state, reports) {
+            state.reports = reports.data;
+        },
+        REPORT(state, report) {
+            state.report = report.data;
         },
         MOY_NOTE(state, moyNotes) {
             state.moyNote = moyNotes.data;
@@ -415,6 +426,36 @@ export const store = createStore({
             return new Promise((resolve, reject) => {
                 noteService.delete(id).then((response) => {
                     commit('NOTE', null);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+        findAllReports({commit}) {
+            return new Promise((resolve, reject) => {
+                reportService.findAll().then((response) => {
+                    commit('REPORTS', response.data);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+        findReportById({commit}, id) {
+            return new Promise((resolve, reject) => {
+                reportService.findById(id).then((response) => {
+                    commit('REPORT', response.data);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+        createReport({commit}, report) {
+            return new Promise((resolve, reject) => {
+                reportService.create(report).then((response) => {
+                    commit('REPORT', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
