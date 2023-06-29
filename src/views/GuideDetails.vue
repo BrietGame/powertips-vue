@@ -57,12 +57,12 @@
 
       <div v-if="comments != null" class="py-4" v-for="comment in comments">
         <div class="author flex gap-2 items-center">
-<!--          <div class="avatar">-->
-<!--            <img class="w-10 h-10 rounded-3xl" :src="author.avatar" :alt="author.username" />-->
-<!--          </div>-->
-<!--          <div class="infos">-->
-<!--            <h2 class="text-xl font-bold">{{ author.username }}</h2>-->
-<!--          </div>-->
+          <div class="avatar">
+            <img class="w-10 h-10 rounded-3xl" :src="comment.user.avatar" :alt="comment.user.username" />
+          </div>
+          <div class="infos">
+            <h2 class="text-xl font-bold">{{ comment.user.username }}</h2>
+          </div>
         </div>
         <div class="py-2" v-html="comment.content"></div>
       </div>
@@ -119,7 +119,7 @@ export default {
       });
     },
     onSubmitComment() {
-      if (this.newComment != null && this.getUser != null) {
+      if (this.newComment != null && this.$store.getters.getUser != null) {
         this.$store.dispatch('createComment', {
           content: this.newComment,
           guide_id: this.guide.id,
@@ -127,6 +127,12 @@ export default {
         }).then(() => {
           this.newComment = null;
           this.$store.dispatch('findAllCommentsByGuidId', this.$route.params.id);
+        });
+      } else {
+        this.$notify({
+          title: 'Erreur',
+          text: 'Vous devez être connecté pour poster un commentaire !',
+          type: 'error'
         });
       }
     }
