@@ -35,7 +35,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.user)
       if (this.isEdit) {
         this.$store.dispatch('updateUser', this.user).then(() => {
           this.$router.push('/admin/users');
@@ -48,13 +47,10 @@ export default {
     }
   },
   created() {
-    console.log(this.$route.params.id)
     if (this.$route.params.id) {
-      console.info('findUserById')
       this.$store.dispatch('findUserById', this.$route.params.id).then(() => {
         this.user = this.$store.getters.getUser;
         this.isEdit = true;
-        console.log(this.user)
       });
     }
   }

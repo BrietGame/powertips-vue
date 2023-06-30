@@ -42,11 +42,9 @@ export default {
   },
   computed: {
     users() {
-      console.log(this.$store.getters.getUsers)
       return this.$store.getters.getUsers;
     },
     guides() {
-      console.log(this.$store.getters.getGuides)
       return this.$store.getters.getGuides;
     }
   },
@@ -66,12 +64,10 @@ export default {
   created() {
     this.$store.dispatch('findAllGuides');
     this.$store.dispatch('findAllUsers');
-    console.log(this.$route.params.id)
     if (this.$route.params.id) {
       this.$store.dispatch('findCommentById', this.$route.params.id).then(() => {
         this.comment = this.$store.getters.getComment;
         this.isEdit = true;
-        console.log(this.comment)
       });
     }
   }

@@ -40,7 +40,6 @@ export const store = createStore({
             return {
                 id: guide.id,
                 title: guide.title,
-                excerpt: guide.excerpt,
                 status: guide.status,
                 user: {
                     id: guide.user.id,
@@ -171,7 +170,6 @@ export const store = createStore({
             });
         },
         updateUser({commit}, user) {
-            console.log(user)
             return new Promise((resolve, reject) => {
                 userService.update(user.id, user).then((response) => {
                     commit('USER', response.data);
@@ -384,7 +382,6 @@ export const store = createStore({
         findNotesByGuideId({commit}, id) {
             return new Promise((resolve, reject) => {
                 noteService.findAllByGuideId(id).then((response) => {
-                    console.log(response);
                     commit('NOTE', response.data);
                     resolve(response);
                 }).catch((error) => {

@@ -1,5 +1,6 @@
 <template>
-  <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Créer mon guide</h1>
+  <h1 v-if="!isEdit" class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Créer un guide</h1>
+  <h1 v-if="isEdit" class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Modifier le guide</h1>
 
   <form @submit.prevent="onSubmit">
     <div class="mb-6">
@@ -16,7 +17,7 @@
     </div>
     <div class="mb-6">
       <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sélectionnez une catégorie <span class="text-red-700">*</span></label>
-      <select v-model="category_id" type="text" id="category_id" :class="category_id === '' ? 'bg-red-50 border border-red-500 text-red-900' : category_id === null ? '' : 'bg-green-50 border border-green-500 text-green-900'" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+      <select v-model="category_id" id="category_id" :class="category_id === '' ? 'bg-red-50 border border-red-500 text-red-900' : category_id === null ? '' : 'bg-green-50 border border-green-500 text-green-900'" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
       </select>
     </div>
@@ -34,7 +35,8 @@ export default {
       title: null,
       content: null,
       excerpt: null,
-      category_id: null
+      category_id: null,
+      isEdit: false
     }
   },
   computed: {
@@ -101,6 +103,7 @@ export default {
         this.content = this.guide.content;
         this.excerpt = this.guide.excerpt;
         this.category_id = this.guide.category_id;
+        this.isEdit = true;
       });
     }
   }

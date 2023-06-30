@@ -2,8 +2,7 @@
   <div v-if="!isConnected" id="marketing-banner" tabindex="-1" class="fixed z-50 flex flex-col md:flex-row justify-between w-[calc(100%-2rem)] p-4 -translate-x-1/2 bg-white border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600">
     <div class="flex flex-col items-start mb-3 mr-4 md:items-center md:flex-row md:mb-0">
       <RouterLink to="/" class="flex items-center mb-2 border-gray-200 md:pr-4 md:mr-4 md:border-r md:mb-0 dark:border-gray-600">
-        <img src="../assets/logo.svg" class="h-8 mr-3" alt="Logo" />
-        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PowerTips</span>
+        <img src="../assets/logo.png" class="h-8 mr-3" alt="Logo" />
       </RouterLink>
       <p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">Connectez-vous et partagez dans vos guides votre savoir-faire en quelques clics !</p>
     </div>

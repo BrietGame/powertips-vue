@@ -47,7 +47,6 @@ export default {
   },
   methods: {
     samePassword() {
-      console.log(this.password === this.confirmPassword)
       this.password === this.confirmPassword ? this.passwordCheck = true : this.passwordCheck = false
     },
     async emailAlreadyExist () {

@@ -4,24 +4,29 @@
     <div class="metadata">
       <p>Publié le {{ guide.created_at == guide.updated_at ? formatDate(guide.created_at) : formatDate(guide.updated_at) }}</p>
       <ul>
-        <li><font-awesome-icon :icon="['fas', 'eye']" />{{guide.stats != null ? guide.stats.views : ''}} vue(s)</li>
+        <li><font-awesome-icon :icon="['fas', 'eye']" /> {{guide.stats != null ? guide.stats.views : ''}}</li>
         <li><font-awesome-icon :icon="['fas', 'comment-dots']" /> {{ comments.length }}</li>
         <li v-if="note !== null"><font-awesome-icon v-for="n in Array.from({length: note})" :icon="['fa', 'star']" /></li>
       </ul>
     </div>
-    <div v-if="author != null" class="status text-center py-10">
-      <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'WAITING'" class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"><font-awesome-icon :icon="['fas', 'clock']" /> Attente de validation</span>
-      <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'DRAFT'" class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><font-awesome-icon :icon="['fas', 'file-pen']" /> Brouillon</span>
-      <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'REFUSED'" class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"><font-awesome-icon :icon="['fas', 'circle-xmark']" /> Publication refusée</span>
-      <span v-if="userConnected !== null && author.id == userConnected.id && guide.status == 'PUBLISHED'" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300"><font-awesome-icon :icon="['fas', 'circle-check']" /> Publication acceptée</span>
+    <div v-if="author != null && userConnected !== null" class="flex flex-col items-center gap-3 text-center py-10">
+      <div class="status">
+        <span v-if="author.id == userConnected.id && guide.status == 'WAITING'" class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"><font-awesome-icon :icon="['fas', 'clock']" /> Attente de validation</span>
+        <span v-if="author.id == userConnected.id && guide.status == 'DRAFT'" class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><font-awesome-icon :icon="['fas', 'file-pen']" /> Brouillon</span>
+        <span v-if="author.id == userConnected.id && guide.status == 'REFUSED'" class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"><font-awesome-icon :icon="['fas', 'circle-xmark']" /> Publication refusée</span>
+        <span v-if="author.id == userConnected.id && guide.status == 'PUBLISHED'" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300"><font-awesome-icon :icon="['fas', 'circle-check']" /> Publication acceptée</span>
+      </div>
+      <RouterLink :to="'/edit-guide/' + guide.id" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm max-w-[250px] sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Modifier mon guide
+      </RouterLink>
     </div>
     <Loading v-else />
 
-    <section class="flex justify-between">
-      <div class="content">
+    <section class="flex justify-evenly">
+      <div class="content flex-3">
         <div v-html="guide.content"></div>
       </div>
-      <div v-if="author != null" class="author flex flex-col items-center">
+      <div v-if="author != null" class="author flex flex-col items-center flex-1 min-w-[200px]">
         <div class="avatar">
           <img class="w-32 h-32 rounded-3xl" :src="author.avatar" :alt="author.username" />
         </div>
@@ -32,7 +37,7 @@
       <Loading v-else />
     </section>
 
-    <section>
+    <section class="py-10">
       <h2 class="text-2xl font-bold mb-4">Commentaires</h2>
       <div class="py-5">
         <p>Donnez une note</p>
@@ -53,8 +58,8 @@
           </div>
         </div>
       </form>
-      <p class="ml-auto text-xs text-gray-500 dark:text-gray-400">Remember, contributions to this topic should follow our <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Community Guidelines</a>.</p>
-
+      <p class="ml-auto text-xs text-gray-500 dark:text-gray-400">Votre commentaire doit respecter les <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">règles de la communauté</a>.</p>
+      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
       <div v-if="comments != null" class="py-4" v-for="comment in comments">
         <div class="author flex gap-2 items-center">
           <div class="avatar">
@@ -109,7 +114,6 @@ export default {
       return dateFormated.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
     },
     addNote(i) {
-      console.log('addNote', i + 1)
       this.$store.dispatch('createNote', {
         score: i + 1,
         guide_id: this.guide.id,

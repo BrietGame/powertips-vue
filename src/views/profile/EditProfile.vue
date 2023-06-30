@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log("onSubmit")
       this.user.username = this.username || this.user.username
       this.$store.dispatch('updateUser', this.user).then(() => {
         this.$notify({

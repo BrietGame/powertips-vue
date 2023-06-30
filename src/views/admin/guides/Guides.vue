@@ -31,43 +31,36 @@ export default {
           {
             label: 'Id',
             type: 'number',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).id : null,
             isEditable: false
           },
           {
             label: 'Title',
             type: 'text',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).title : null,
             isEditable: true
           },
           {
             label: 'Excerpt',
             type: 'text',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).excerpt : null,
             isEditable: true
           },
           {
             label: 'Status',
             type: 'text',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).status : null,
             isEditable: true
           },
           {
             label: 'User',
             type: 'text',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).user_id : null,
             isEditable: true
           },
           {
             label: 'Category',
             type: 'text',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).category_id : null,
             isEditable: true
           },
           {
             label: 'Actualisation',
             type: 'date',
-            value: this.$store.state.guide !== null ? this.$store.state.guides.find(guide => guide.id === this.$store.state.guide.id).created_at : null,
             isEditable: true
           }
         ],

@@ -39,13 +39,11 @@ export default {
   },
   computed: {
     categories() {
-      console.log(this.$store.getters.getCategories)
       return this.$store.getters.getCategories;
     }
   },
   methods: {
     onSubmit() {
-      console.log(this.user)
       if (this.isEdit) {
         this.$store.dispatch('updateCategory', this.category).then(() => {
           this.$router.push('/admin/categories');
@@ -58,15 +56,11 @@ export default {
     }
   },
   created() {
-    console.info('findAllCategories')
     this.$store.dispatch('findAllCategories');
-    console.log(this.$route.params.id)
     if (this.$route.params.id) {
-      console.info('findCategoryById')
       this.$store.dispatch('findCategoryById', this.$route.params.id).then(() => {
         this.category = this.$store.getters.getCategory;
         this.isEdit = true;
-        console.log(this.category)
       });
     }
   }

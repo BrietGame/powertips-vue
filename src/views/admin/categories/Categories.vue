@@ -28,25 +28,21 @@ export default {
           {
             label: 'Id',
             type: 'number',
-            value: this.$store.state.category !== null ? this.$store.state.categories.find(user => user.id === this.$store.state.category.id).id : null,
             isEditable: false
           },
           {
             label: 'Name',
             type: 'text',
-            value: this.$store.state.category !== null ? this.$store.state.categories.find(user => user.id === this.$store.state.category.id).name : null,
             isEditable: true
           },
           {
             label: 'Description',
             type: 'text',
-            value: this.$store.state.category !== null ? this.$store.state.categories.find(user => user.id === this.$store.state.category.id).description : null,
             isEditable: true
           },
           {
             label: 'Parent Id',
             type: 'text',
-            value: this.$store.state.category !== null ? this.$store.state.categories.find(user => user.id === this.$store.state.category.id).parent_id : null,
             isEditable: true
           }
         ],

@@ -31,25 +31,21 @@ export default {
           {
             label: 'Id',
             type: 'number',
-            value: this.$store.state.note !== null ? this.$store.state.notes.find(user => user.id === this.$store.state.note.id).id : null,
             isEditable: false
           },
           {
             label: 'Score',
             type: 'text',
-            value: this.$store.state.note !== null ? this.$store.state.notes.find(user => user.id === this.$store.state.note.id).score : null,
             isEditable: true
           },
           {
             label: 'User',
             type: 'text',
-            value: this.$store.state.note !== null ? this.$store.state.notes.find(user => user.id === this.$store.state.note.id).user_id : null,
             isEditable: true
           },
           {
             label: 'Guide',
             type: 'text',
-            value: this.$store.state.note !== null ? this.$store.state.notes.find(user => user.id === this.$store.state.note.id).guide_id : null,
             isEditable: true
           }
         ],
