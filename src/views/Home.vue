@@ -29,7 +29,7 @@ export default {
   components: {GuideCard, Loading},
   computed: {
     guides() {
-      return this.$store.getters.getGuides;
+      return this.$store.getters.getGuidesPublished;
     }
   },
   mounted() {

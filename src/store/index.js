@@ -36,6 +36,11 @@ export const store = createStore({
             guide.updated_at = new Date(guide.updated_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
             return guide;
         }),
+        getGuidesPublished: state => state.guides.filter(guide => guide.status === 'PUBLISHED').map(guide => {
+            guide.created_at = new Date(guide.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+            guide.updated_at = new Date(guide.updated_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+            return guide;
+        }),
         getGuidesForList: state => state.guides.map(guide => {
             return {
                 id: guide.id,
