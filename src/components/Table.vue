@@ -52,6 +52,12 @@
                 </div>
               </div>
             </div>
+            <div v-else-if="key === 'avatar'">
+              <img class="w-11 h-11 rounded-3xl" :src="v" />
+            </div>
+            <div v-else-if="key === 'roles'">
+              <span v-for="(role, ka) in utils.returnRoles(v)" :key="ka" :class="role === 'ROLE_ADMIN' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800' " class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{ role }}</span>
+            </div>
             <div v-else-if="key === 'category'">
               <RouterLink :to="'/categories/' + v.id">
                 <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{ v.name }}</span>
@@ -82,6 +88,7 @@
 <script setup>
 import { initFlowbite } from 'flowbite'
 import {onMounted} from "vue";
+import {utils} from "@/utils";
 
 onMounted(() => {
   initFlowbite()

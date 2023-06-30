@@ -134,7 +134,7 @@ export default {
           user_id: this.$store.getters.getUser.id
         }).then(() => {
           this.newComment = null;
-          this.$store.dispatch('findAllCommentsByGuidId', this.guide.id);
+          this.$store.dispatch('findAllCommentsByGuideId', this.guide.id);
         });
       } else {
         this.$notify({
@@ -179,7 +179,7 @@ export default {
 
         this.$store.dispatch('findAllUsers');
         this.$store.dispatch('findNoteMoyenneByGuideId', this.guide.id);
-        this.$store.dispatch('findAllCommentsByGuidId', this.guide.id);
+        this.$store.dispatch('findAllCommentsByGuideId', this.guide.id);
       });
     } else {
       this.$router.push('/guides');

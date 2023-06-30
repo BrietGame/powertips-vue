@@ -10,6 +10,9 @@ export default {
     findAllByGuideId(id) {
         return axios.get(import.meta.env.VITE_BASE_URL + `/note/guide/${id}`);
     },
+    findAllByUserId(id) {
+        return axios.get(import.meta.env.VITE_BASE_URL + `/note/user/${id}`);
+    },
     findMoyenneByGuideId(id) {
         return axios.get(import.meta.env.VITE_BASE_URL + `/note/moyenne/${id}`);
     },

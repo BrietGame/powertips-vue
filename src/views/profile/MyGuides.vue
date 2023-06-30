@@ -58,6 +58,11 @@ export default {
             isEditable: true
           },
           {
+            label: 'Slug',
+            type: 'text',
+            isEditable: true
+          },
+          {
             label: 'Status',
             type: 'text',
             isEditable: true
@@ -78,7 +83,7 @@ export default {
             isEditable: true
           }
         ],
-        labels: ['Id', 'Title', 'Status', 'User', 'Catégorie(s)', 'Date', 'Actions'],
+        labels: ['Id', 'Title', 'Status', 'Slug', 'User', 'Catégorie(s)', 'Date', 'Actions'],
         values: this.$store.getters.getGuidesForList,
         actions: {
           view: {
@@ -97,9 +102,14 @@ export default {
       }
     },
     deleteGuide(id) {
-      console.log("delete guide" + id)
       this.$store.dispatch('deleteGuide', id).then(() => {
-        this.refreshGuides();
+        this.guides = null;
+        this.$router.push('/my-guides');
+        this.$notify({
+          type: 'success',
+          title: 'Succès',
+          text: 'Le guide a bien été supprimé'
+        });
       });
     },
     refreshGuides() {
@@ -111,13 +121,26 @@ export default {
       }, 300)
     }
   },
+  beforeUpdate() {
+    if (this.$route.name === 'delete-guide') {
+      this.$store.dispatch('findGuideBySlug', this.$route.params.slug).then(() => {
+        if (this.$store.getters.getGuide.user_id !== this.user.id) {
+          this.$router.push('/my-guides');
+          this.$notify({
+            type: 'error',
+            title: 'Erreur',
+            text: 'Vous n\'avez pas le droit de supprimer ce guide'
+          });
+        } else {
+          this.deleteGuide(this.$store.getters.getGuide.id);
+        }
+      });
+    }
+  },
   mounted() {
     const decoded = utils.decodeToken();
     this.$store.dispatch('findUserById', decoded.id);
     this.refreshGuides();
-    if (this.$route.name === 'delete-guide') {
-      this.deleteGuide(this.$route.params.id);
-    }
   }
 }
 </script>

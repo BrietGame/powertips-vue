@@ -29,7 +29,10 @@ export const store = createStore({
         getUser: state => state.user,
         getCategories: state => state.categories,
         getCategory: state => state.category,
-        getComments: state => state.comments,
+        getComments: state => state.comments.map(comment => {
+            comment.created_at = new Date(comment.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+            return comment;
+        }),
         getComment: state => state.comment,
         getGuides: state => state.guides.map(guide => {
             guide.created_at = new Date(guide.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
@@ -76,37 +79,37 @@ export const store = createStore({
             state.users = users.data;
         },
         USER(state, user) {
-            state.user = user.data;
+            state.user = user != null ? user.data : null;
         },
         CATEGORIES(state, categories) {
             state.categories = categories.data;
         },
         CATEGORY(state, category) {
-            state.category = category.data;
+            state.category = category != null ? category.data : null;
         },
         COMMENTS(state, comments) {
             state.comments = comments.data;
         },
         COMMENT(state, comment) {
-            state.comment = comment.data;
+            state.comment = comment != null ? comment.data : null;
         },
         GUIDES(state, guides) {
             state.guides = guides.data;
         },
         GUIDE(state, guide) {
-            state.guide = guide.data;
+            state.guide = guide != null ? guide.data : null;
         },
         NOTES(state, notes) {
             state.notes = notes.data;
         },
         NOTE(state, note) {
-            state.note = note.data;
+            state.note = note != null ? note.data : null;
         },
         REPORTS(state, reports) {
             state.reports = reports.data;
         },
         REPORT(state, report) {
-            state.report = report.data;
+            state.report = report != null ? report.data : null;
         },
         MOY_NOTE(state, moyNotes) {
             state.moyNote = moyNotes.data;
@@ -218,7 +221,7 @@ export const store = createStore({
         createCategory({commit}, category) {
             return new Promise((resolve, reject) => {
                 categoryService.create(category).then((response) => {
-                    commit('CATEGORIE', response.data);
+                    commit('CATEGORY', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -228,7 +231,7 @@ export const store = createStore({
         updateCategory({commit}, category) {
             return new Promise((resolve, reject) => {
                 categoryService.update(category.id, category).then((response) => {
-                    commit('CATEGORIE', response.data);
+                    commit('CATEGORY', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -238,7 +241,7 @@ export const store = createStore({
         deleteCategory({commit}, id) {
             return new Promise((resolve, reject) => {
                 categoryService.delete(id).then((response) => {
-                    commit('CATEGORIE', null);
+                    commit('CATEGORY', null);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -255,9 +258,19 @@ export const store = createStore({
                 });
             });
         },
-        findAllCommentsByGuidId({commit}, id) {
+        findAllCommentsByGuideId({commit}, id) {
             return new Promise((resolve, reject) => {
                 commentService.findAllByGuideId(id).then((response) => {
+                    commit('COMMENTS', response.data);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+        findAllCommentsByUserId({commit}, id) {
+            return new Promise((resolve, reject) => {
+                commentService.findAllByUserId(id).then((response) => {
                     commit('COMMENTS', response.data);
                     resolve(response);
                 }).catch((error) => {
@@ -399,6 +412,16 @@ export const store = createStore({
             return new Promise((resolve, reject) => {
                 noteService.findAllByGuideId(id).then((response) => {
                     commit('NOTE', response.data);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+        findAllNotesByUserId({commit}, id) {
+            return new Promise((resolve, reject) => {
+                noteService.findAllByUserId(id).then((response) => {
+                    commit('NOTES', response.data);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);

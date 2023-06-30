@@ -29,11 +29,14 @@
           <img class="w-24 h-24 mb-3 rounded-full shadow-lg" :src="user.avatar" :alt="'Avatar de ' + user.username"/>
           <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ user.username }}</h5>
           <span class="text-sm text-gray-500 dark:text-gray-400">{{ user.email }}</span>
+          <div class="flex gap-2 py-3">
+            <span v-for="(role, ka) in utils.returnRoles(user.roles)" :key="ka" :class="role === 'ROLE_ADMIN' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800' " class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{ role }}</span>
+          </div>
           <div class="flex mt-4 space-x-3 md:mt-6">
             <RouterLink :to="'/admin/users/edit/' + user.id" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               Editer
             </RouterLink>
-            <RouterLink :to="'/admin/users/delete/' + user.id" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">
+            <RouterLink :to="'/admin/users/delete/' + user.id" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-red-700 border border-red-300 rounded-lg hover:bg-red-100 hover:text-red-900 focus:ring-4 focus:outline-none focus:ring-red-200 dark:bg-red-800 dark:text-white dark:border-red-600 dark:hover:bg-red-700 dark:hover:border-red-700 dark:focus:ring-red-700">
               Supprimer
             </RouterLink>
           </div>
@@ -79,11 +82,15 @@ import GuideCard from "@/components/GuideCard.vue";
 import Guides from "@/views/admin/guides/Guides.vue";
 import Comments from "@/views/admin/comments/Comments.vue";
 import Notes from "@/views/admin/notes/Notes.vue";
+import {utils} from "@/utils";
 
 export default {
   name: 'UserDetails',
   components: {Notes, Comments, Guides, GuideCard, Loading},
   computed: {
+    utils() {
+      return utils
+    },
     user() {
       return this.$store.getters.getUser;
     },

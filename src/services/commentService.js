@@ -7,6 +7,9 @@ export default {
     findAllByGuideId(id) {
         return axios.get(import.meta.env.VITE_BASE_URL + `/comment/guide/${id}`);
     },
+    findAllByUserId(userId) {
+        return axios.get(import.meta.env.VITE_BASE_URL + `/comment/user/${userId}`);
+    },
     findById(id) {
         return axios.get(import.meta.env.VITE_BASE_URL + `/comment/${id}`);
     },

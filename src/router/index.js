@@ -41,12 +41,12 @@ const router = createRouter({
       component: () => import('../views/profile/MyGuides.vue')
     },
     {
-      path: '/my-guides/delete/:id',
+      path: '/my-guides/delete/:slug',
       name: 'delete-guide',
       component: () => import('../views/profile/MyGuides.vue')
     },
     {
-      path: '/edit-guide/:id',
+      path: '/edit-guide/:slug',
       name: 'edit-guide',
       component: () => import('../views/FormGuide.vue')
     },
@@ -82,6 +82,11 @@ const router = createRouter({
       component: () => import('../views/admin/users/FormUser.vue')
     },
     {
+      path: '/admin/users/delete/:id',
+      name: 'admin-users-delete',
+      component: () => import('../views/admin/users/Users.vue')
+    },
+    {
       path: '/admin/users/create',
       name: 'admin-users-create',
       component: () => import('../views/admin/users/FormUser.vue')
@@ -97,6 +102,11 @@ const router = createRouter({
       component: () => import('../views/admin/categories/FormCategory.vue')
     },
     {
+      path: '/admin/categories/delete/:id',
+      name: 'admin-categories-delete',
+      component: () => import('../views/admin/categories/Categories.vue')
+    },
+    {
       path: '/admin/categories/create',
       name: 'admin-categories-create',
       component: () => import('../views/admin/categories/FormCategory.vue')
@@ -107,12 +117,12 @@ const router = createRouter({
       component: () => import('../views/admin/guides/Guides.vue')
     },
     {
-      path: '/admin/guides/edit/:id',
+      path: '/admin/guides/edit/:slug',
       name: 'admin-guides-edit',
       component: () => import('../views/admin/guides/FormGuide.vue')
     },
     {
-      path: '/admin/guides/delete/:id',
+      path: '/admin/guides/delete/:slug',
       name: 'admin-guides-delete',
       component: () => import('../views/admin/guides/Guides.vue')
     },
@@ -137,6 +147,11 @@ const router = createRouter({
       component: () => import('../views/admin/comments/FormComment.vue')
     },
     {
+      path: '/admin/comments/delete/:id',
+      name: 'admin-comments-delete',
+      component: () => import('../views/admin/comments/Comments.vue')
+    },
+    {
       path: '/admin/notes',
       name: 'admin-notes',
       component: () => import('../views/admin/notes/Notes.vue')
@@ -150,6 +165,11 @@ const router = createRouter({
       path: '/admin/notes/create',
       name: 'admin-notes-create',
       component: () => import('../views/admin/notes/FormNote.vue')
+    },
+    {
+      path: '/admin/notes/delete/:id',
+      name: 'admin-notes-delete',
+      component: () => import('../views/admin/notes/Notes.vue')
     },
     {
       path: '/about',

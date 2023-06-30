@@ -81,9 +81,9 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (this.$route.params.id) {
+      if (this.$route.params.slug) {
         this.$store.dispatch('updateGuide', {
-          id: this.$route.params.id,
+          id: this.guide.id,
           title: this.title,
           content: this.content,
           excerpt: this.excerpt,
@@ -130,8 +130,8 @@ export default {
     }
   },
   mounted() {
-    if (this.$route.params.id) {
-      this.$store.dispatch('findGuideById', this.$route.params.id).then(() => {
+    if (this.$route.params.slug) {
+      this.$store.dispatch('findGuideBySlug', this.$route.params.slug).then(() => {
         this.title = this.guide.title;
         this.content = this.guide.content;
         this.excerpt = this.guide.excerpt;
