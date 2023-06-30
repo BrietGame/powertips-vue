@@ -56,7 +56,7 @@ const router = createRouter({
       component: () => import('../views/FormGuide.vue')
     },
     {
-      path: '/guides/:id',
+      path: '/guides/:slug',
       name: 'guide',
       component: () => import('../views/GuideDetails.vue')
     },

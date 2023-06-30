@@ -134,7 +134,7 @@ export default {
           user_id: this.$store.getters.getUser.id
         }).then(() => {
           this.newComment = null;
-          this.$store.dispatch('findAllCommentsByGuidId', this.$route.params.id);
+          this.$store.dispatch('findAllCommentsByGuidId', this.guide.id);
         });
       } else {
         this.$notify({
@@ -158,8 +158,8 @@ export default {
     }
   },
   created() {
-    if (this.$route.params.id !== null) {
-      this.$store.dispatch('findGuideById', this.$route.params.id).then(() => {
+    if (this.$route.params.slug !== null) {
+      this.$store.dispatch('findGuideBySlug', this.$route.params.slug).then(() => {
         this.guide = this.$store.getters.getGuide;
         if (this.guide === null) {
           this.$router.push('/guides');
@@ -176,10 +176,11 @@ export default {
         this.$store.dispatch('updateGuide', this.guide);
         // Transformer un json en objet
         this.guide.stats = JSON.parse(this.guide.stats);
+
+        this.$store.dispatch('findAllUsers');
+        this.$store.dispatch('findNoteMoyenneByGuideId', this.guide.id);
+        this.$store.dispatch('findAllCommentsByGuidId', this.guide.id);
       });
-      this.$store.dispatch('findAllUsers');
-      this.$store.dispatch('findNoteMoyenneByGuideId', this.$route.params.id);
-      this.$store.dispatch('findAllCommentsByGuidId', this.$route.params.id);
     } else {
       this.$router.push('/guides');
     }

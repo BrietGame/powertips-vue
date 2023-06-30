@@ -46,6 +46,7 @@ export const store = createStore({
                 id: guide.id,
                 title: guide.title,
                 status: guide.status,
+                slug: guide.slug,
                 user: {
                     id: guide.user.id,
                     username: guide.user.username,
@@ -327,6 +328,16 @@ export const store = createStore({
         findGuideById({commit}, id) {
             return new Promise((resolve, reject) => {
                 guideService.findById(id).then((response) => {
+                    commit('GUIDE', response.data);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+        findGuideBySlug({commit}, slug) {
+            return new Promise((resolve, reject) => {
+                guideService.findBySlug(slug).then((response) => {
                     commit('GUIDE', response.data);
                     resolve(response);
                 }).catch((error) => {

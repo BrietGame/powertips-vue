@@ -10,6 +10,9 @@ export default {
     findById(id) {
         return axios.get(import.meta.env.VITE_BASE_URL + `/guide/${id}`);
     },
+    findBySlug(slug) {
+        return axios.get(import.meta.env.VITE_BASE_URL + `/guide/slug/${slug}`);
+    },
     create(guide) {
         return axios.post(import.meta.env.VITE_BASE_URL + "/guide/create", guide);
     },
