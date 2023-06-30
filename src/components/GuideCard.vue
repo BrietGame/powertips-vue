@@ -9,16 +9,11 @@
         </div>
       </div>
       <div class="p-5">
-        <RouterLink :to="'/guides/' + guide.id">
+        <RouterLink :to="'/guides/' + guide.slug">
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{guide.title}}</h5>
         </RouterLink>
-        <p v-if="guide.excerpt !== null" class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{
-            guide.excerpt.length > 100
-                ? guide.excerpt.substring(0, 100) + '...'
-                : guide.excerpt
-          }}.</p>
-        <p v-else>{{ guide.content.substring(0, 100) + '...' }}</p>
-        <RouterLink :to="'/guides/' + guide.id" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <p v-if="guide.excerpt !== null" class="mb-3 font-normal text-gray-700 dark:text-gray-400" v-html="guide.excerpt"></p>
+        <RouterLink :to="'/guides/' + guide.slug" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Lire le guide
           <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
         </RouterLink>
@@ -29,11 +24,25 @@
 <script>
 export default {
   name: 'GuideCard',
+  methods: {
+    updateExcerpt() {
+      this.guides.map((guide) => {
+        if (guide.excerpt !== null) {
+          guide.excerpt = guide.excerpt.substring(0, 100) + '...';
+        } else {
+          guide.excerpt = guide.content.substring(0, 100) + '...';
+        }
+      });
+    }
+  },
   props: {
     guides: {
       type: Object,
       required: true
     }
+  },
+  mounted() {
+    this.updateExcerpt();
   }
 }
 </script>

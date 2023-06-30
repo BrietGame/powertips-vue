@@ -83,15 +83,15 @@ export default {
     onSubmit() {
       if (this.$route.params.slug) {
         this.$store.dispatch('updateGuide', {
-          id: this.guide.id,
+          id: this.$store.getters.getGuide.id,
           title: this.title,
           content: this.content,
           excerpt: this.excerpt,
           category_id: this.category_id,
+          slug: this.$store.getters.getGuide.slug,
           user_id: utils.decodeToken().id
         }).then(() => {
           this.$notify({
-            group: 'notify',
             title: 'Succès',
             text: 'Votre guide a bien été modifié',
             type: 'success'
@@ -108,7 +108,6 @@ export default {
           status: this.status === 'WAITING' ? 'WAITING' : 'DRAFT'
         }).then(() => {
           this.$notify({
-            group: 'notify',
             title: 'Succès',
             text: 'Votre guide a bien été créé',
             type: 'success'
@@ -131,11 +130,12 @@ export default {
   },
   mounted() {
     if (this.$route.params.slug) {
-      this.$store.dispatch('findGuideBySlug', this.$route.params.slug).then(() => {
-        this.title = this.guide.title;
-        this.content = this.guide.content;
-        this.excerpt = this.guide.excerpt;
-        this.category_id = this.guide.category_id;
+      this.$store.dispatch('findGuideBySlug', this.$route.params.slug).then((res) => {
+        console.log(this.$store.getters.getGuide)
+        this.title = this.$store.getters.getGuide.title;
+        this.content = this.$store.getters.getGuide.content;
+        this.excerpt = this.$store.getters.getGuide.excerpt;
+        this.category_id = this.$store.getters.getGuide.category_id;
         this.isEdit = true;
       });
     }

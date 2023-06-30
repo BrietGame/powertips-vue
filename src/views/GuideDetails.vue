@@ -16,7 +16,7 @@
         <span v-if="author.id == userConnected.id && guide.status == 'REFUSED'" class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"><font-awesome-icon :icon="['fas', 'circle-xmark']" /> Publication refusée</span>
         <span v-if="author.id == userConnected.id && guide.status == 'PUBLISHED'" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300"><font-awesome-icon :icon="['fas', 'circle-check']" /> Publication acceptée</span>
       </div>
-      <RouterLink :to="'/edit-guide/' + guide.id" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm max-w-[250px] sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      <RouterLink :to="'/edit-guide/' + guide.slug" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm max-w-[250px] sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Modifier mon guide
       </RouterLink>
     </div>
@@ -157,7 +157,7 @@ export default {
       });
     }
   },
-  created() {
+  mounted() {
     if (this.$route.params.slug !== null) {
       this.$store.dispatch('findGuideBySlug', this.$route.params.slug).then(() => {
         this.guide = this.$store.getters.getGuide;
