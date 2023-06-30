@@ -13,8 +13,26 @@
         <input v-model="guide.excerpt" type="text" id="excerpt" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="">
       </div>
       <div class="mb-6">
-        <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
-        <textarea v-model="guide.content" type="text" id="content" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+        <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contenu <span class="text-red-700">*</span></label>
+        <Editor api-key="jvkkt0fcf302er790c5oht9l3eks48wtow8qjwn9c0z8gf6l"
+                v-model="guide.content"
+                :init="{
+             height: 500,
+             menubar: false,
+             plugins: [
+               'advlist autolink lists link image charmap print preview anchor',
+               'searchreplace visualblocks code fullscreen',
+               'insertdatetime media table paste code help wordcount',
+               'image'
+             ],
+             toolbar:
+               'undo redo | formatselect | bold italic backcolor | \
+               alignleft aligncenter alignright alignjustify | \
+               bullist numlist outdent indent | removeformat | help | image',
+             location: '/uploads/guides/image/image.png'
+           }"
+                :class="guide.content === '' ? 'bg-red-50 border border-red-500 text-red-900' : guide.content === null ? '' : 'bg-green-50 border border-green-500 text-green-900'" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
       </div>
       <div class="mb-6">
         <label for="media" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Media</label>
@@ -41,8 +59,12 @@
 </template>
 
 <script>
+import Editor from "@tinymce/tinymce-vue";
 export default {
   name: 'FormGuide',
+  components: {
+    Editor
+  },
   data() {
     return {
       guide: {
