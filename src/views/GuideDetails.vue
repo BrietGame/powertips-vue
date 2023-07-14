@@ -22,7 +22,7 @@
     </div>
     <Loading v-else />
 
-    <section class="flex justify-evenly">
+    <section class="flex-col flex md:justify-evenly md:flex-row">
       <div class="content flex-3">
         <div v-html="guide.content"></div>
       </div>
