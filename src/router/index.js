@@ -60,6 +60,11 @@ const router = createRouter({
       name: 'guide',
       component: () => import('../views/GuideDetails.vue')
     },
+    {
+      path: '/category/:id',
+      name: 'category',
+      component: () => import('../views/Category.vue')
+    },
       // Admin
     {
       path: '/admin',

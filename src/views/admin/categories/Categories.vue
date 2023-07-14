@@ -52,7 +52,7 @@ export default {
         actions: {
           view: {
             label: 'Voir',
-            action: '/categories/'
+            action: '/category/'
           },
           edit: {
             label: 'Editer',

@@ -3,7 +3,7 @@
       <div class="img-guide">
         <img class="relative rounded-t-lg " :src="guide.media != null ? guide.media : 'https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'" alt="" />
         <div class="categories">
-          <RouterLink :to="'/categories/' + guide.category.id">
+          <RouterLink :to="'/category/' + guide.category.id">
             <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{ guide.category.name }}</span>
           </RouterLink>
         </div>

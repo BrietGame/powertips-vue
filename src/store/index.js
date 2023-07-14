@@ -338,6 +338,16 @@ export const store = createStore({
                 });
             });
         },
+        findAllGuidesByCategoryId({commit}, id) {
+            return new Promise((resolve, reject) => {
+                guideService.findAllByCategoryId(id).then((response) => {
+                    commit('GUIDES', response.data);
+                    resolve(response);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
         findGuideById({commit}, id) {
             return new Promise((resolve, reject) => {
                 guideService.findById(id).then((response) => {
