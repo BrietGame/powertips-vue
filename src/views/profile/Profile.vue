@@ -24,28 +24,26 @@
         </RouterLink>
       </div>
     </div>
-    <div class="flex flex-col">
-      <div v-if="guides != null">
-        <RouterLink v-for="guide in guides" :to="'/guides/' + guide.slug" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-          <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="https://cdn.streamcave.tv/yunktisbanner.jpg" alt="">
-          <div class="flex flex-col justify-between p-4 leading-normal">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ guide.title }}</h5>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ guide.excerpt }}</p>
-          </div>
-        </RouterLink>
-      </div>
-    </div>
   </div>
   <Loading v-else />
+  <div>
+    <h2 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Mes guides</h2>
+    <p class="text-center mb-10 text-gray-500 dark:text-gray-400">Retrouvez tous les guides que vous avez écrit ci-dessous.</p>
+    <section v-if="guides != null" class="flex justify-between">
+      <GuideCard :guides="guides" />
+    </section>
+    <Loading v-else />
+  </div>
 </template>
 
 <script>
 import { utils } from '../../utils/index';
 import Loading from "@/components/Loading.vue";
+import GuideCard from "@/components/GuideCard.vue";
 
 export default {
   name: 'Profile',
-  components: {Loading},
+  components: {GuideCard, Loading},
   computed: {
     user() {
       return this.$store.getters.getUser;
